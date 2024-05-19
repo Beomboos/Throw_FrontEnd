@@ -1,6 +1,5 @@
 package com.example.deamhome.presentation.main.mypage
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -42,6 +41,9 @@ class MyPageViewModel(
         get() = _profileUiState
 
     fun profileModify(){
+        viewModelScope.launch {
+            _event.emit(Event.NavigateToProfile(_profileUiState.value.data))
+        }
     }
 
     //가게관리 버튼이벤트
@@ -82,6 +84,10 @@ class MyPageViewModel(
 
             _isLoading.value = false;
         }
+    }
+
+    fun refresh(){
+        inquiry()
     }
 
     fun logout(){
@@ -127,7 +133,7 @@ class MyPageViewModel(
     sealed interface Event {
         data object NetworkErrorEvent : Event
         data object NavigateToLogin : Event
-        data object NavigateToProfile : Event
+        data class NavigateToProfile(val user: UserProfile) : Event
         data object NavigateToStore : Event
         data object NavigateToMileage : Event
         data class FailedMessage(val message: String) : Event

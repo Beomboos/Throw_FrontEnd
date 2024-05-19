@@ -25,11 +25,11 @@ class DefaultStoreRepository(
             )
 
             if (response is ApiResponse.Success) {
-                Log.d("HTTP_LOG","Success")
+                Log.d(HTTP_LOG_TAG,"Success")
             }
 
             else if(response is ApiResponse.Failure){
-                Log.d("HTTP_LOG", response.toString());
+                Log.d(HTTP_LOG_TAG, response.toString());
             }
 
             response
@@ -48,14 +48,17 @@ class DefaultStoreRepository(
             )
 
             if (response is ApiResponse.Success) {
-                Log.d("HTTP_LOG","Success")
+                Log.d(HTTP_LOG_TAG,"Success")
             }
 
             else if(response is ApiResponse.Failure){
-                Log.d("HTTP_LOG", response.toString());
+                Log.d(HTTP_LOG_TAG, response.toString());
             }
 
             response
         }
+    }
+    companion object{
+        private val HTTP_LOG_TAG = "HTTP_LOG"
     }
 }

@@ -2,6 +2,7 @@ package com.example.deamhome.data.repository
 
 import android.util.Log
 import com.example.deamhome.data.datasource.network.NetworkProductDataSource
+import com.example.deamhome.data.model.request.ProfileModifyRequest
 import com.example.deamhome.data.model.response.Message
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.model.UserProfile
@@ -22,22 +23,40 @@ class DefaultProductRepository(
         }
     }
 
-    override suspend fun logout(): ApiResponse<Message> {
+    override suspend fun logout(): ApiResponse<Unit> {
         return withContext(dispatcher){
             val response = networkProductDataSource.logout()
 
-            Log.d("HTTP_LOG", response.toString())
+            Log.d(HTTP_LOG_TAG, response.toString())
             if(response is ApiResponse.Success) {
-                Log.d("HTTP_LOG", "Success")
+                Log.d(HTTP_LOG_TAG, "Success")
             }
             else if(response is ApiResponse.NetworkError){
-                Log.d("HTTP_LOG", "NetworkError")
+                Log.d(HTTP_LOG_TAG, "NetworkError")
             }
             else if(response is ApiResponse.Unexpected){
-                Log.d("HTTP_LOG", "Unexpected")
+                Log.d(HTTP_LOG_TAG, "Unexpected")
             }
 
             response
         }
+    }
+
+    override suspend fun modify(name: String, phone: String, email: String): ApiResponse<Unit> {
+        return withContext(dispatcher){
+            val response = networkProductDataSource.modify(
+                ProfileModifyRequest(
+                    userName = name,
+                    userPhoneNumber = phone,
+                    email = email
+                )
+            )
+
+            response
+        }
+    }
+
+    companion object{
+        private val HTTP_LOG_TAG = "HTTP_LOG"
     }
 }

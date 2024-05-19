@@ -30,9 +30,9 @@ class DefaultAuthRepository(
             )
 
 
-            Log.d("HTTP_LOG", response.toString())
+            Log.d(HTTP_LOG_TAG, response.toString())
             if (response is ApiResponse.Success) {
-                Log.d("HTTP_LOG","Success")
+                Log.d(HTTP_LOG_TAG,"Success")
                 response.body?.let {
                     localAuthDataSource.updateToken(response.body)
                 }
@@ -68,6 +68,9 @@ class DefaultAuthRepository(
         runBlocking {
             localAuthDataSource.updateToken(token)
         }
+    }
+    companion object{
+        private val HTTP_LOG_TAG = "HTTP_LOG"
     }
 
 //    override fun signUp(signUpRequest: SignUpRequest): ApiResponse<String> {

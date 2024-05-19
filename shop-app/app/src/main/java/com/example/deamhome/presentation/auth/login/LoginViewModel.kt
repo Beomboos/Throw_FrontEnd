@@ -46,6 +46,8 @@ class LoginViewModel(
             if(!authRepository.getToken().accessToken.isEmpty())
                 _event.emit(Event.LoginSuccess)
         }
+
+        Log.d("test", authRepository.getToken().accessToken)
     }
 
     fun login() {

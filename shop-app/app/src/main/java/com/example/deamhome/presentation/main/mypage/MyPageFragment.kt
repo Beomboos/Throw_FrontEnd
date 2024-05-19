@@ -1,20 +1,18 @@
 package com.example.deamhome.presentation.main.mypage
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.deamhome.R
-import com.example.deamhome.app.DeamHomeApplication
 import com.example.deamhome.common.base.BindingFragment
-import com.example.deamhome.common.util.log
 import com.example.deamhome.common.view.Toaster
-import com.example.deamhome.common.view.showSnackbar
 import com.example.deamhome.databinding.FragmentMyPageBinding
+import com.example.deamhome.domain.model.UserProfile
 import com.example.deamhome.presentation.auth.login.LoginActivity
-import kotlinx.coroutines.launch
+import com.example.deamhome.presentation.main.mypage.profile.ProfileActivity
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val viewModel: MyPageViewModel by viewModels { MyPageViewModel.Factory};
@@ -59,7 +57,9 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
 
             MyPageViewModel.Event.NetworkErrorEvent -> {}
 
-            MyPageViewModel.Event.NavigateToProfile -> {}
+            is MyPageViewModel.Event.NavigateToProfile -> {
+                startActivity(ProfileActivity.getIntent(requireContext(), event.user))
+            }
 
             MyPageViewModel.Event.NavigateToMileage -> {}
 
