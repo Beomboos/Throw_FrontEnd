@@ -16,9 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MyPageViewModel(
     private val productRepository: ProductRepository
@@ -87,6 +84,34 @@ class MyPageViewModel(
         }
     }
 
+    fun logout(){
+        synchronized(this) {
+            if (_isLoading.value) return
+            _isLoading.value = true
+        }
+        viewModelScope.launch {
+            when(val response = productRepository.logout()){
+                is ApiResponse.Success -> {
+                    _event.emit(Event.NavigateToLogin)
+                }
+
+                is ApiResponse.Failure -> {
+                    _event.emit(Event.FailedMessage(response.error?.firstOrNull().toString()))
+                }
+
+                is ApiResponse.Unexpected -> {
+                    _event.emit(Event.NavigateToLogin)
+                }
+
+                else -> {
+                    _event.emit(Event.FailedMessage("알 수 없는 에러가 발생했습니다."))
+                }
+            }
+
+            _isLoading.value = false;
+        }
+    }
+
     data class ProfileUiState(
         val isLoading: Boolean,
         val isError: Boolean,
@@ -105,6 +130,7 @@ class MyPageViewModel(
         data object NavigateToProfile : Event
         data object NavigateToStore : Event
         data object NavigateToMileage : Event
+        data class FailedMessage(val message: String) : Event
     }
 
     companion object {

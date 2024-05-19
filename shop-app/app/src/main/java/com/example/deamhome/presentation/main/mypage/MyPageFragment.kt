@@ -10,6 +10,7 @@ import com.example.deamhome.R
 import com.example.deamhome.app.DeamHomeApplication
 import com.example.deamhome.common.base.BindingFragment
 import com.example.deamhome.common.util.log
+import com.example.deamhome.common.view.Toaster
 import com.example.deamhome.common.view.showSnackbar
 import com.example.deamhome.databinding.FragmentMyPageBinding
 import com.example.deamhome.presentation.auth.login.LoginActivity
@@ -41,9 +42,20 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
 
     private fun handleEvent(event: MyPageViewModel.Event) {
         when (event) {
-            MyPageViewModel.Event.NavigateToLogin -> startActivity(
-                LoginActivity.getIntent(requireContext()),
-            )
+            MyPageViewModel.Event.NavigateToLogin -> {
+                startActivity(
+                    LoginActivity.getIntent(requireContext()),
+                )
+                Toaster.showShort(requireContext(),"로그아웃 되었습니다.")
+                requireActivity().finish()
+            }
+
+            is MyPageViewModel.Event.FailedMessage -> {
+                Toaster.showShort(
+                    requireContext(),
+                    event.message,
+                )
+            }
 
             MyPageViewModel.Event.NetworkErrorEvent -> {}
 
