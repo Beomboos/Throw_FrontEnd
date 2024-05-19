@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.deamhome.domain.model.MapStoreInfo" />
+
+        <variable
+            name="onCall"
+            type="kotlin.jvm.functions.Function1" />
+
+        <variable
+            name="onNavigate"
+            type="kotlin.jvm.functions.Function1" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="127dp">
+
+        <ImageView
+            android:id="@+id/iv_store_image"
+            imageUrl="@{item.storeImageUrl}"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="12dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/ic_map_24" />
+
+        <TextView
+            android:id="@+id/tv_store_name"
+            setTextOrEmpty="@{item.storeName}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_store_image"
+            app:layout_constraintTop_toTopOf="@id/iv_store_image"
+            tools:text="가게 이름" />
+
+        <TextView
+            android:id="@+id/tv_store_detail_address"
+            setTextOrEmpty="@{item.storeFullAddress}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_store_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_store_name"
+            tools:text="가게 상세주소" />
+
+        <ImageView
+            android:id="@+id/btn_store_call"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:onClick="@{()->onCall.invoke(item)}"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_store_phone_28"
+            app:layout_constraintBottom_toTopOf="@id/tv_store_call"
+            app:layout_constraintStart_toStartOf="@id/tv_store_detail_address"
+            app:layout_constraintTop_toBottomOf="@id/tv_store_detail_address" />
+
+
+        <TextView
+            android:id="@+id/tv_store_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:text="@string/map_store_call_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_store_image"
+            app:layout_constraintEnd_toEndOf="@id/btn_store_call"
+            app:layout_constraintStart_toStartOf="@id/btn_store_call"
+            app:layout_constraintTop_toBottomOf="@id/btn_store_call" />
+
+
+        <ImageView
+            android:id="@+id/btn_store_navigator"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:onClick="@{()->onNavigate.invoke(item)}"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_store_navigator_28"
+            app:layout_constraintBottom_toTopOf="@id/tv_store_navigator"
+            app:layout_constraintStart_toEndOf="@id/btn_store_call"
+            app:layout_constraintTop_toBottomOf="@id/tv_store_detail_address" />
+
+        <TextView
+            android:id="@+id/tv_store_navigator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:text="@string/map_store_navigator_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_store_image"
+            app:layout_constraintEnd_toEndOf="@id/btn_store_navigator"
+            app:layout_constraintStart_toStartOf="@id/btn_store_navigator"
+            app:layout_constraintTop_toBottomOf="@id/btn_store_navigator" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

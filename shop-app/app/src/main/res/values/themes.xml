@@ -1,0 +1,20 @@
+<resources>
+    <!-- splash 를 활용한 것: 스타일 이름은 고정이여야 함 -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white_FFFFFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_empty_white_splash_icon</item>
+        <item name="android:statusBarColor">@color/white_FFFFFF</item>
+        <item name="android:background">@color/white_FFFFFF</item>
+        <!-- splash 화면 이후 연결해줄 내 앱의 테마 스타일 -->
+        <item name="postSplashScreenTheme">@style/Base.Theme.DeamHome</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DeamHome" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/vista_blue_80A1D4</item>
+        <item name="android:statusBarColor">@color/white_FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:textColorHighlight">@color/vista_blue_80A1D4</item>
+    </style>
+</resources>

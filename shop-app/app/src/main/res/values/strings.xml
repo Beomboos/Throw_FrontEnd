@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Throw</string>
+
+    <!-- all -->
+    <string name="all_network_check_please_message">인터넷 연결을 확인해주세요</string>
+    <string name="all_back_key_check_message">\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.</string>
+
+    <string name="all_snackbar_default_action">확인</string>
+    <string name="bottom_navigation_home">홈</string>
+    <string name="bottom_navigation_search">검색</string>
+    <string name="bottom_navigation_category">카테고리</string>
+    <string name="bottom_navigation_cart">장바구니</string>
+    <string name="bottom_navigation_my_page">마이페이지</string>
+    <string name="signup">회원가입</string>
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="password_confirm">비밀번호 확인</string>
+    <string name="email">이메일</string>
+    <string name="nickname">닉네임</string>
+    <string name="phone">전화번호</string>
+    <string name="login">로그인</string>
+    <string name="account_search">계정조회</string>
+    <string name="easy_social_login">간편 로그인</string>
+    <string name="id_save">아이디 저장</string>
+
+    <string name="all_dialog_default_positive_button">데이터</string>
+
+    <!-- home -->
+    <string name="home_menu_map">지도</string>
+    <string name="home_menu_mypage">마이페이지</string>
+
+    <!--map-->
+    <string name="map_location_permission_upgrade_require_message">정확한 위치를 활용하려면 위치 권한을 업데이트해주세요!</string>
+    <string name="map_location_permission_require_message">원활한 동작을 위해 위치 권한을 켜주세요.</string>
+    <string name="map_location_service_turn_on_require_message">GPS를 먼저 켜주세요.</string>
+
+    <!--map_store-->
+    <string name="map_store_navigator_text">길찾기</string>
+    <string name="map_store_call_text">전화</string>
+
+    <!--store_management-->
+    <string name="store_management_title_text">수정 및 삭제</string>
+    <string name="store_management_message_text">수정할지 삭제할지 선택해주세요.</string>
+    <string name="store_management_modify_text">수정</string>
+    <string name="store_management_delete_text">삭제</string>
+
+    <!--mypage-->
+    <string name="mypage_store_text"><u>가게 관리</u></string>
+    <string name="mypage_mileage_buy_text"><u>마일리지/상품 구매</u></string>
+
+    <!--profile-->
+    <string name="profile_yes_text">예</string>
+    <string name="profile_no_text">아니요</string>
+    <string name="profile_modify_text">프로필을 수정하시겠습니까?</string>
+    <string name="profile_tilte_text">프로필 수정</string>
+
+
+</resources>
