@@ -43,7 +43,6 @@ class ProfileActivity : BindingActivity<ActivityProfileBinding>(R.layout.activit
                     applicationContext,
                     event.message
                 )
-                MyPageViewModel(DeamHomeApplication.container.productRepository).inquiry()
                 finish()
             }
 

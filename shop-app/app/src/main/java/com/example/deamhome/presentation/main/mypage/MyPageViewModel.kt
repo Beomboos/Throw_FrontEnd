@@ -48,6 +48,9 @@ class MyPageViewModel(
 
     //가게관리 버튼이벤트
     fun store(){
+        viewModelScope.launch {
+            _event.emit(Event.NavigateToStore)
+        }
     }
 
     //마일리지/상품 구매 버튼이벤트

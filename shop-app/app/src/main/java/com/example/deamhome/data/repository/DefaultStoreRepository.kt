@@ -2,8 +2,10 @@ package com.example.deamhome.data.repository
 
 import android.util.Log
 import com.example.deamhome.data.datasource.network.NetworkStoreDataSource
+import com.example.deamhome.data.model.request.CrnRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
+import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.data.model.response.StoreInfoBySearchNameResponse
 import com.example.deamhome.data.model.response.StoresInfoByLocationResponse
 import com.example.deamhome.domain.model.ApiResponse
@@ -54,6 +56,32 @@ class DefaultStoreRepository(
             else if(response is ApiResponse.Failure){
                 Log.d(HTTP_LOG_TAG, response.toString());
             }
+
+            response
+        }
+    }
+
+    override suspend fun store(): ApiResponse<List<StoreResponse>> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.store()
+
+            if(response is ApiResponse.Success){
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else
+                Log.d(HTTP_LOG_TAG, response.toString());
+
+            response
+        }
+    }
+
+    override suspend fun crn(crn: String): ApiResponse<StoreResponse> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.crn(
+                CrnRequest(
+                    crn=crn
+                )
+            )
 
             response
         }

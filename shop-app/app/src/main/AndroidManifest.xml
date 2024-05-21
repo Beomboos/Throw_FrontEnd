@@ -20,6 +20,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.main.store.address.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.main.store.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.main.store.home.StoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.main.mypage.profile.ProfileActivity"
             android:exported="false" />
 
@@ -48,14 +57,14 @@
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:exported="false"
-            android:theme="@style/Theme.App.Starting"></activity>
+            android:theme="@style/Theme.App.Starting" />
         <activity
             android:name=".presentation.auth.signup.SignUpActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.main.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

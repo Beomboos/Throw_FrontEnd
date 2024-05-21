@@ -165,7 +165,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="2.5"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:onClick="@{()->viewModel.store()}">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

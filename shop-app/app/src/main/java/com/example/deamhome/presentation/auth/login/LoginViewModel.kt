@@ -72,7 +72,12 @@ class LoginViewModel(
                 is ApiResponse.Failure -> {
                     _event.emit(
                         Event.LoginFailed(
-                            response.error?.firstOrNull().toString()
+                            try {
+                                response.error.toString()
+                            }
+                            catch (e: Exception){
+                                response.error?.firstOrNull().toString()
+                            }
                         ),
                     )
                 }

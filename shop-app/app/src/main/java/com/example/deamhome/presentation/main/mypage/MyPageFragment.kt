@@ -13,6 +13,7 @@ import com.example.deamhome.databinding.FragmentMyPageBinding
 import com.example.deamhome.domain.model.UserProfile
 import com.example.deamhome.presentation.auth.login.LoginActivity
 import com.example.deamhome.presentation.main.mypage.profile.ProfileActivity
+import com.example.deamhome.presentation.main.store.home.StoreActivity
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val viewModel: MyPageViewModel by viewModels { MyPageViewModel.Factory};
@@ -63,7 +64,11 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
 
             MyPageViewModel.Event.NavigateToMileage -> {}
 
-            MyPageViewModel.Event.NavigateToStore -> {}
+            MyPageViewModel.Event.NavigateToStore -> {
+                startActivity(
+                    StoreActivity.getIntent(requireContext()),
+                )
+            }
         }
     }
 
