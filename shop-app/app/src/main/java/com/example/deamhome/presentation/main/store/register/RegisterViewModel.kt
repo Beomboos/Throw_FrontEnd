@@ -119,6 +119,12 @@ class RegisterViewModel(
         }
     }
 
+    fun addressSelect(){
+        viewModelScope.launch {
+            _event.emit(Event.NavigateToAddress)
+        }
+    }
+
     fun trashFormat() {
         viewModelScope.launch {
             _trashType.update {
@@ -135,6 +141,8 @@ class RegisterViewModel(
 
     sealed interface Event {
         data class CrnFailed(val message: String): Event
+
+        data object NavigateToAddress: Event
 
         data object RegisterSuccess: Event
 

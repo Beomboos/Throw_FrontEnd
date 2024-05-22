@@ -15,6 +15,9 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 val serverUrl = properties.getProperty("SERVER_URL")
 val keyStoreAlias = properties.getProperty("KEY_STORE_ALIAS")
 val keyStoreIv = properties.getProperty("KEY_STORE_IV")
+val kakaoKey = properties.getProperty("KAKAO_KEY")
+val kakaoRestKey = properties.getProperty("KAKAO_REST_KEY")
+val kakaoServerUrl = properties.getProperty("KAKAO_SERVER_URL")
 
 android {
     namespace = "com.example.deamhome"
@@ -31,6 +34,9 @@ android {
         buildConfigField("String", "SERVER_URL", serverUrl)
         buildConfigField("String", "KEY_STORE_ALIAS", keyStoreAlias)
         buildConfigField("String", "KEY_STORE_IV", keyStoreIv)
+        buildConfigField("String", "KAKAO_KEY", kakaoKey)
+        buildConfigField("String", "KAKAO_REST_KEY", kakaoRestKey)
+        buildConfigField("String", "KAKAO_SERVER_URL", kakaoServerUrl)
     }
 
     buildTypes {
@@ -117,6 +123,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.squareup.retrofit2:converter-gson:2.6.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 
     implementation(files("libs/libDaumMapAndroid.jar"))
 

@@ -2,7 +2,6 @@ package com.example.deamhome.presentation.main.store.home
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +9,6 @@ import com.example.deamhome.R
 import com.example.deamhome.common.base.BindingActivity
 import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.databinding.ActivityStoreBinding
-import com.example.deamhome.presentation.auth.login.LoginActivity
 import com.example.deamhome.presentation.main.store.register.RegisterActivity
 
 class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_store) {

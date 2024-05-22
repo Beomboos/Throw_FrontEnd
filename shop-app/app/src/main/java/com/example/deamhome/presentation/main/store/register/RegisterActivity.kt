@@ -8,6 +8,7 @@ import com.example.deamhome.R
 import com.example.deamhome.common.base.BindingActivity
 import com.example.deamhome.common.view.Toaster
 import com.example.deamhome.databinding.ActivityRegisterBinding
+import com.example.deamhome.presentation.main.store.address.AddressActivity
 
 class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activity_register) {
     private val viewModel: RegisterViewModel by viewModels { RegisterViewModel.Factory }
@@ -41,6 +42,10 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
             is RegisterViewModel.Event.CrnFailed -> {
                 binding.crnBtn.text = ""
                 Toaster.showShort(applicationContext, evnet.message)
+            }
+
+            RegisterViewModel.Event.NavigateToAddress -> {
+                startActivity(AddressActivity.getIntent(this@RegisterActivity))
             }
         }
     }
