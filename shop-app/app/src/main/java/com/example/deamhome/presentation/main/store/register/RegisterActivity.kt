@@ -39,7 +39,7 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
             }
 
             is RegisterViewModel.Event.RegisterFailed -> {
-
+                Toaster.showShort(applicationContext, evnet.message)
             }
 
             is RegisterViewModel.Event.CrnFailed -> {

@@ -3,6 +3,8 @@ package com.example.deamhome.data.repository
 import android.util.Log
 import com.example.deamhome.data.datasource.network.NetworkStoreDataSource
 import com.example.deamhome.data.model.request.CrnRequest
+import com.example.deamhome.data.model.request.DeleteRequest
+import com.example.deamhome.data.model.request.ModifyRequest
 import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
@@ -100,6 +102,49 @@ class DefaultStoreRepository(
                     zipCode = register.zipCode,
                     fullAddress = register.fullAddress,
                     trashType = register.trashType
+                )
+            )
+
+            if(response is ApiResponse.Success){
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else
+                Log.d(HTTP_LOG_TAG, response.toString());
+
+            response
+        }
+    }
+
+    override suspend fun delete(extStoreId: String): ApiResponse<Unit> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.delete(
+                DeleteRequest(
+                    extStoreId = extStoreId
+                )
+            )
+
+            if(response is ApiResponse.Success){
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else
+                Log.d(HTTP_LOG_TAG, response.toString());
+
+            response
+        }
+    }
+
+    override suspend fun modify(modify: ModifyRequest): ApiResponse<StoreResponse> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.modify(
+                ModifyRequest(
+                    extStoreId = modify.extStoreId,
+                    storePhone = modify.storePhone,
+                    crn = modify.crn,
+                    latitude = modify.latitude,
+                    longitude = modify.longitude,
+                    zipCode = modify.zipCode,
+                    fullAddress = modify.fullAddress,
+                    trashType = modify.trashType
                 )
             )
 

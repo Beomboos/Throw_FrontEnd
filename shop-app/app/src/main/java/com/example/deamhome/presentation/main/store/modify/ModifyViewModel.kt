@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.deamhome.app.DeamHomeApplication
+import com.example.deamhome.data.model.request.ModifyRequest
 import com.example.deamhome.data.model.response.StoreResponse
+import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.StoreRepository
 import com.example.deamhome.presentation.main.store.register.RegisterViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,6 +34,8 @@ class ModifyViewModel(
     val isPopup: StateFlow<Boolean>
         get() = _isPopup
 
+    var lat: String = "";
+    var lon: String = "";
     val crn: MutableStateFlow<String> = MutableStateFlow("")
     val phone: MutableStateFlow<String> = MutableStateFlow("")
     val fullAddress: MutableStateFlow<String> = MutableStateFlow("")
@@ -69,7 +73,57 @@ class ModifyViewModel(
     }
 
     fun modify(){
+        synchronized(this) {
+            if (_isLoading.value) return
+            _isLoading.value = true
+        }
 
+        trashFormat()
+        val extStoreId = _store.value.extStoreId
+        val crn = crn.value.trim().replace("-","")
+        val phone = phone.value.trim().replace("-","")
+        val fullAddress = fullAddress.value.trim()
+        val zoneNo = zoneNo.value.trim()
+        val trashType: RegisterViewModel.TrashType = _trashType.value
+        var latitude = _store.value.latitude
+        var longitude = _store.value.longitude
+
+        if(!lat.equals("")){
+            latitude = lat.toDouble()
+            longitude = lon.toDouble()
+        }
+
+        viewModelScope.launch {
+            if (crn.isNullOrEmpty()) _event.emit(Event.Failed("사용자 등록번호 ${errorMsg}"))
+            else if (phone.isNullOrEmpty()) _event.emit(Event.Failed("전화번호 ${errorMsg}"))
+            else if (fullAddress.isNullOrEmpty()) _event.emit(Event.Failed("지번주소 ${errorMsg}"))
+            else if (zoneNo.isNullOrEmpty()) _event.emit(Event.Failed("우편번호 ${errorMsg}\n지번주소를 한번 더 확인해주세요."))
+            else{
+                when(val response = storeRepository.modify(
+                    ModifyRequest(
+                        extStoreId = extStoreId,
+                        storePhone = phone,
+                        crn = crn,
+                        latitude = latitude,
+                        longitude = longitude,
+                        zipCode = zoneNo,
+                        fullAddress = fullAddress,
+                        trashType = trashType.toString(),
+                    )
+                )){
+                    is ApiResponse.Success -> {
+                        _event.emit(Event.ModifySuccess)
+                    }
+                    is ApiResponse.Failure -> {
+                        _event.emit(Event.Failed(response.error.toString()))
+                    }
+                    else->{
+                        _event.emit(Event.Failed("알 수 없는 오류 입니다."))
+                    }
+                }
+                _isLoading.value = false
+            }
+        }
     }
 
     fun select(type: SelectType){
@@ -89,9 +143,26 @@ class ModifyViewModel(
     }
 
     fun delete(){
+        synchronized(this) {
+            if (_isLoading.value) return
+            _isLoading.value = true
+        }
+        viewModelScope.launch {
+            when(val response = storeRepository.delete(_store.value.extStoreId)){
+                is ApiResponse.Success -> {
+                    _event.emit(Event.DeleteSuccess)
+                }
+                is ApiResponse.Failure -> {
+                    _event.emit(Event.Failed(response.error.toString()))
+                }
+
+                else -> {
+                    _event.emit(Event.Failed("알 수 없는 오류 입니다."))}
+            }
+        }
     }
 
-    fun storeUpdate(store: StoreResponse){
+    fun storeUpdate(store: StoreResponse, type: SelectType){
         viewModelScope.launch {
             _store.update {
                 it.copy(
@@ -133,7 +204,7 @@ class ModifyViewModel(
         var crnFormat:String = crn
         if(!crn.contains("-")) {
             crnFormat =
-                crn.substring(0, 3) + "-" + crn.substring(3, 5) + "-" + crn.substring(5, 9)
+                crn.substring(0, 3) + "-" + crn.substring(3, 5) + "-" + crn.substring(5, 10)
         }
         return crnFormat
     }
@@ -180,6 +251,8 @@ class ModifyViewModel(
     }
 
     companion object{
+        val HTTP_LOG: String = "HTTP_LOG"
+        private val errorMsg: String = "칸이 비어있습니다."
 
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

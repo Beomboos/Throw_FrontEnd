@@ -1,6 +1,8 @@
 package com.example.deamhome.data.datasource.network
 
 import com.example.deamhome.data.model.request.CrnRequest
+import com.example.deamhome.data.model.request.DeleteRequest
+import com.example.deamhome.data.model.request.ModifyRequest
 import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
@@ -30,5 +32,13 @@ class NetworkStoreDataSource(
 
     suspend fun register(registerRequest: RegisterRequest): ApiResponse<String>{
         return service.registerRequest(registerRequest)
+    }
+
+    suspend fun modify(modifyRequest: ModifyRequest): ApiResponse<StoreResponse>{
+        return service.modify(modifyRequest)
+    }
+
+    suspend fun delete(deleteRequest: DeleteRequest): ApiResponse<Unit>{
+        return service.delete(deleteRequest)
     }
 }
