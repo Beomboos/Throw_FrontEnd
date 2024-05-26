@@ -11,6 +11,7 @@ import com.example.deamhome.common.base.BindingActivity
 import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.data.model.response.address.DocumentResponse
 import com.example.deamhome.databinding.ActivityStoreBinding
+import com.example.deamhome.presentation.main.store.modify.ModifyActivity
 import com.example.deamhome.presentation.main.store.register.RegisterActivity
 
 class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_store) {
@@ -45,6 +46,7 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
             }
 
             is StoreViewModel.Event.NavigateToModify -> {
+                startActivityForResult(ModifyActivity.getIntent(this@StoreActivity, event.store), REQUEST_CODE)
             }
         }
     }

@@ -179,11 +179,11 @@ class RegisterViewModel(
         viewModelScope.launch {
             _trashType.update {
                 it.copy(
-                    general = if (general.value) "0" else "1",
-                    bottle = if (bottle.value) "0" else "1",
-                    plastic = if (plastic.value) "0" else "1",
-                    paper = if (paper.value) "0" else "1",
-                    can = if (can.value) "0" else "1"
+                    general = if (!general.value) "0" else "1",
+                    bottle = if (!bottle.value) "0" else "1",
+                    plastic = if (!plastic.value) "0" else "1",
+                    paper = if (!paper.value) "0" else "1",
+                    can = if (!can.value) "0" else "1"
                 )
             }
         }

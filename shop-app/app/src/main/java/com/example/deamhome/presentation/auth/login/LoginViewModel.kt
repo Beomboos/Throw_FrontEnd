@@ -29,6 +29,10 @@ class LoginViewModel(
     val id: MutableStateFlow<String> = MutableStateFlow("")
     val pwd: MutableStateFlow<String> = MutableStateFlow("")
 
+    private val _isLogin: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLogin: StateFlow<Boolean>
+        get() = _isLogin
+
     init {
         viewModelScope.launch {
             id.collect {
@@ -43,8 +47,7 @@ class LoginViewModel(
         }
 
         viewModelScope.launch {
-            if(!authRepository.getToken().accessToken.isEmpty())
-                _event.emit(Event.LoginSuccess)
+            _isLogin.value = authRepository.isLogin
         }
 
         Log.d("test", authRepository.getToken().accessToken)

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.deamhome.app.DeamHomeApplication
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.model.UserProfile
+import com.example.deamhome.domain.repository.AuthRepository
 import com.example.deamhome.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MyPageViewModel(
+    private val authRepository: AuthRepository,
     private val productRepository: ProductRepository
 ) : ViewModel() {
     private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
@@ -89,10 +91,6 @@ class MyPageViewModel(
         }
     }
 
-    fun refresh(){
-        inquiry()
-    }
-
     fun logout(){
         synchronized(this) {
             if (_isLoading.value) return
@@ -102,6 +100,7 @@ class MyPageViewModel(
             when(val response = productRepository.logout()){
                 is ApiResponse.Success -> {
                     _event.emit(Event.NavigateToLogin)
+                    authRepository.removeToken()
                 }
 
                 is ApiResponse.Failure -> {
@@ -150,6 +149,7 @@ class MyPageViewModel(
                 extras: CreationExtras,
             ): T {
                 return MyPageViewModel(
+                    DeamHomeApplication.container.authRepository,
                     DeamHomeApplication.container.productRepository,
                 ) as T
             }

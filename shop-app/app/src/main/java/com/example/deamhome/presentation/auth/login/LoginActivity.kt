@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
@@ -30,6 +31,18 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
 
         viewModel.event.observe(this) { handleEvent(it) }
+
+        if(viewModel.isLogin.value){
+            login()
+        }
+    }
+
+    private fun login(){
+        binding.tilId.error = ""
+        binding.tilPwd.error = ""
+        binding.tvLoginError.text = ""
+        startActivity(MainActivity.getIntent(this@LoginActivity))
+        finish()
     }
 
     private fun handleEvent(event: LoginViewModel.Event) {

@@ -43,6 +43,10 @@ class ProfileActivity : BindingActivity<ActivityProfileBinding>(R.layout.activit
                     applicationContext,
                     event.message
                 )
+                val intent = Intent()
+                intent.putExtra("data", USER_PROFILE);
+                setResult(RESULT_OK, intent)
+                finish()
                 finish()
             }
 

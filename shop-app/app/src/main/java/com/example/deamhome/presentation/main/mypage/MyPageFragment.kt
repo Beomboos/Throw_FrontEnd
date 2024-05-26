@@ -59,7 +59,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
             MyPageViewModel.Event.NetworkErrorEvent -> {}
 
             is MyPageViewModel.Event.NavigateToProfile -> {
-                startActivity(ProfileActivity.getIntent(requireContext(), event.user))
+                startActivityForResult(ProfileActivity.getIntent(requireContext(), event.user),REQUEST_CODE)
             }
 
             MyPageViewModel.Event.NavigateToMileage -> {}
@@ -72,7 +72,18 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            val receiveData = data?.getStringExtra("data")
+            if (receiveData != null) {
+                viewModel.inquiry()
+            }
+        }
+    }
+
     companion object {
+        private const val REQUEST_CODE: Int = 1
         @JvmStatic
         fun newInstance() = MyPageFragment()
     }
