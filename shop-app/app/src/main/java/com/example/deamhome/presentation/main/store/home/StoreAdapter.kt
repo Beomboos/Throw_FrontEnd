@@ -1,8 +1,10 @@
 package com.example.deamhome.presentation.main.store.home
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deamhome.R
@@ -19,6 +21,7 @@ class StoreAdapter(private var items: List<StoreResponse>, val onClick: (StoreRe
     override fun onBindViewHolder(holder: StoreViewHolder, position: Int) {
         holder.storeName.text = items[position].storeName
         holder.storeType.text = trashTypeTransform(items[position].trashType)
+        holder.storeImg.setImageURI(Uri.parse("https://www.bizhankook.com/upload/bk/article/202002/thumb/19402-44437-sampleM.jpg"))
         holder.itemView.setOnClickListener{
             onClick(items[position])
         }
@@ -48,5 +51,6 @@ class StoreAdapter(private var items: List<StoreResponse>, val onClick: (StoreRe
     inner class StoreViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val storeName = itemView.findViewById<TextView>(R.id.store_name)
         val storeType = itemView.findViewById<TextView>(R.id.store_type)
+        val storeImg = itemView.findViewById<ImageView>(R.id.iv_store_image)
     }
 }

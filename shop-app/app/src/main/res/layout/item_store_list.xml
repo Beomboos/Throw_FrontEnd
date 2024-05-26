@@ -8,14 +8,6 @@
         <variable
             name="item"
             type="com.example.deamhome.domain.model.MapStoreInfo" />
-
-        <variable
-            name="onCall"
-            type="kotlin.jvm.functions.Function1" />
-
-        <variable
-            name="onNavigate"
-            type="kotlin.jvm.functions.Function1" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,42 +25,39 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
-            tools:src="@drawable/ic_map_24" />
+            tools:src="@drawable/ic_map_24"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/store_name"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_store_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/store_type"
+            android:text="가게이름"
+            android:textSize="22dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:paddingBottom="4dp"/>
 
-            <TextView
-                android:id="@+id/store_name"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="가게이름"
-                android:textSize="22dp"
-                android:layout_marginLeft="12dp"
-                android:paddingBottom="4dp"/>
+        <TextView
+            android:id="@+id/store_type"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_store_image"
+            app:layout_constraintTop_toBottomOf="@id/store_name"
+            app:layout_constraintBottom_toTopOf="parent"
+            android:text="타입"
+            android:textSize="16dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:paddingTop="4dp"/>
 
-            <TextView
-                android:id="@+id/store_type"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/store_name"
-                android:text="타입"
-                android:textSize="16dp"
-                android:layout_marginLeft="12dp"
-                android:paddingTop="4dp"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
