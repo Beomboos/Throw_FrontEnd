@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.deamhome.app.DeamHomeApplication
 import com.example.deamhome.common.util.log
+import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.StoreRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,10 +32,11 @@ class RegisterViewModel(
 
     var lat: String = "";
     var lon: String = "";
-
-
     val crn: MutableStateFlow<String> = MutableStateFlow("")
     val phone: MutableStateFlow<String> = MutableStateFlow("")
+    val fullAddress: MutableStateFlow<String> = MutableStateFlow("")
+    val subAddress: MutableStateFlow<String> = MutableStateFlow("")
+    val zoneNo: MutableStateFlow<String> = MutableStateFlow("");
     //일반쓰레기
     val general: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
@@ -122,6 +124,51 @@ class RegisterViewModel(
         }
     }
 
+    fun register(){
+        synchronized(this) {
+            if (_isLoading.value) return
+            _isLoading.value = true
+        }
+        trashFormat()
+        val crn = crn.value.trim()
+        val phone = phone.value.trim()
+        val fullAddress = fullAddress.value.trim()
+        val zoneNo = zoneNo.value.trim()
+        val trashType: TrashType = _trashType.value
+        viewModelScope.launch {
+            if (crn.isNullOrEmpty()) _event.emit(Event.RegisterFailed("사용자 등록번호 ${errorMsg}"))
+            else if (phone.isNullOrEmpty()) _event.emit(Event.RegisterFailed("전화번호 ${errorMsg}"))
+            else if (fullAddress.isNullOrEmpty()) _event.emit(Event.RegisterFailed("지번주소 ${errorMsg}"))
+            else if (zoneNo.isNullOrEmpty()) _event.emit(Event.RegisterFailed("우편번호 ${errorMsg}\n지번주소를 한번 더 확인해주세요."))
+            else{
+                when(val response = storeRepository.register(
+                    RegisterRequest(
+                        storePhone = phone,
+                        crn = crn,
+                        latitude = lat.toDouble(),
+                        longitude = lon.toDouble(),
+                        zipCode = zoneNo,
+                        fullAddress = fullAddress,
+                        trashType = trashType.toString(),
+                    )
+                )){
+                    is ApiResponse.Success -> {
+                        _event.emit(Event.RegisterSuccess);
+                    }
+
+                    is ApiResponse.Failure -> {
+                        _event.emit(Event.RegisterFailed(response.error.toString()));
+                    }
+
+                    else -> {
+
+                    }
+                }
+            }
+            _isLoading.value = false
+        }
+    }
+
     fun addressSelect(){
         viewModelScope.launch {
             _event.emit(Event.NavigateToAddress)
@@ -158,7 +205,11 @@ class RegisterViewModel(
         val plastic: String,
         val paper: String,
         val can: String,
-    )
+    ){
+        override fun toString(): String{
+            return general+bottle+plastic+paper+can;
+        }
+    }
 
     data class CrnBtnUiState(
         val btn: Boolean,
@@ -167,6 +218,7 @@ class RegisterViewModel(
 
     companion object {
         val HTTP_LOG: String = "HTTP_LOG"
+        private val errorMsg: String = "칸이 비어있습니다."
 
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

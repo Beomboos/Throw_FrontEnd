@@ -3,8 +3,10 @@ package com.example.deamhome.data.repository
 import android.util.Log
 import com.example.deamhome.data.datasource.network.NetworkStoreDataSource
 import com.example.deamhome.data.model.request.CrnRequest
+import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
+import com.example.deamhome.data.model.response.RegisterResponse
 import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.data.model.response.StoreInfoBySearchNameResponse
 import com.example.deamhome.data.model.response.StoresInfoByLocationResponse
@@ -82,6 +84,30 @@ class DefaultStoreRepository(
                     crn=crn
                 )
             )
+
+            response
+        }
+    }
+
+    override suspend fun register(register: RegisterRequest): ApiResponse<String> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.register(
+                RegisterRequest(
+                    storePhone = register.storePhone,
+                    crn = register.crn,
+                    latitude = register.latitude,
+                    longitude = register.longitude,
+                    zipCode = register.zipCode,
+                    fullAddress = register.fullAddress,
+                    trashType = register.trashType
+                )
+            )
+
+            if(response is ApiResponse.Success){
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else
+                Log.d(HTTP_LOG_TAG, response.toString());
 
             response
         }

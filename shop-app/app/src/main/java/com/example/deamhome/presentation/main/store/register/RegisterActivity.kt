@@ -27,6 +27,7 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
     fun setupUi(){
         viewModel.crnBtnUiState.observe(this){
             binding.crnBtn.text = it.text
+            binding.etCrn.isEnabled = it.btn
             binding.crnBtn.isEnabled = it.btn
         }
     }
@@ -34,7 +35,7 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
     fun handleEvnet(evnet: RegisterViewModel.Event){
         when(evnet){
             RegisterViewModel.Event.RegisterSuccess -> {
-
+                success();
             }
 
             is RegisterViewModel.Event.RegisterFailed -> {
@@ -51,6 +52,15 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
             }
         }
     }
+
+    fun success(){
+        Toaster.showShort(applicationContext, REGISTER_SUCCESS)
+        val intent = Intent()
+        intent.putExtra("data",REGISTER_SUCCESS)
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+
     //AddressActivity에서 전달받는 값을 처리해준다.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -59,14 +69,15 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
             if (receiveData != null) {
                 binding.tiAddress.setText(receiveData.address_name.toString())
                 binding.etZip.setText(receiveData.road_address?.zone_no.toString())
-                viewModel.lat = receiveData.x.toString()
-                viewModel.lon = receiveData.y.toString()
+                viewModel.lat = receiveData.y.toString()
+                viewModel.lon = receiveData.x.toString()
             }
         }
     }
 
     companion object{
         private const val REQUEST_CODE: Int = 1
+        private const val REGISTER_SUCCESS: String = "등록 성공"
         fun getIntent(context: Context): Intent {
             return Intent(context, RegisterActivity::class.java)
         }

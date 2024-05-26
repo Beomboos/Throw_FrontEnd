@@ -1,5 +1,6 @@
 package com.example.deamhome.presentation.main.store.home
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.deamhome.R
 import com.example.deamhome.common.base.BindingActivity
 import com.example.deamhome.data.model.response.StoreResponse
+import com.example.deamhome.data.model.response.address.DocumentResponse
 import com.example.deamhome.databinding.ActivityStoreBinding
 import com.example.deamhome.presentation.main.store.register.RegisterActivity
 
@@ -43,6 +45,16 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
             }
 
             is StoreViewModel.Event.NavigateToModify -> {
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            val receiveData = data?.getStringExtra("data")
+            if (receiveData != null) {
+                viewModel.stores()
             }
         }
     }

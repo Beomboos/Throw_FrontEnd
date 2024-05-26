@@ -1,8 +1,10 @@
 package com.example.deamhome.data.datasource.network
 
 import com.example.deamhome.data.model.request.CrnRequest
+import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
+import com.example.deamhome.data.model.response.RegisterResponse
 import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.data.model.response.StoreInfoBySearchNameResponse
 import com.example.deamhome.data.model.response.StoresInfoByLocationResponse
@@ -24,5 +26,9 @@ class NetworkStoreDataSource(
 
     suspend fun crn(crnRequest: CrnRequest): ApiResponse<StoreResponse>{
         return service.crn(crnRequest)
+    }
+
+    suspend fun register(registerRequest: RegisterRequest): ApiResponse<String>{
+        return service.registerRequest(registerRequest)
     }
 }
