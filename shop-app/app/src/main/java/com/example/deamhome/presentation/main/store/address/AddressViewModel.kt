@@ -7,10 +7,9 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.deamhome.BuildConfig
 //import com.example.deamhome.BuildConfig
 import com.example.deamhome.app.DeamHomeApplication
-import com.example.deamhome.data.model.response.DocumentResponse
+import com.example.deamhome.data.model.response.address.DocumentResponse
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.KakaoRepository
-import com.example.deamhome.domain.repository.StoreRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -35,10 +34,6 @@ class AddressViewModel(
     )
     val addressUIState: StateFlow<List<DocumentResponse>>
         get() = _addressUIState
-
-    init{
-        search("서울특별시 동작구 사당로 50")
-    }
 
     //SearchView에 검색할 데이터를 AddressBindingAdapter를 통해서 content에 전달받는다
     val searchAddress = { content: String? ->
@@ -66,6 +61,7 @@ class AddressViewModel(
                     }
                 }
                 is ApiResponse.Failure -> {
+                    _evnet.emit(Event.AddressFailed("주소를 정확히 입력해 주세요."))
                 }
                 else ->{
                 }

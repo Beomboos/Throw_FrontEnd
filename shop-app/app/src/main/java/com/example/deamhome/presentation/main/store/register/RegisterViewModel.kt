@@ -29,6 +29,9 @@ class RegisterViewModel(
     val isLoading: StateFlow<Boolean>
         get() = _isLoading
 
+    var lat: String = "";
+    var lon: String = "";
+
 
     val crn: MutableStateFlow<String> = MutableStateFlow("")
     val phone: MutableStateFlow<String> = MutableStateFlow("")

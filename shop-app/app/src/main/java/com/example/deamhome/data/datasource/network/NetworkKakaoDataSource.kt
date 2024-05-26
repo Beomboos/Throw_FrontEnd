@@ -1,6 +1,6 @@
 package com.example.deamhome.data.datasource.network
 
-import com.example.deamhome.data.model.response.AddressResponse
+import com.example.deamhome.data.model.response.address.AddressResponse
 import com.example.deamhome.data.retrofit.KakaoService
 import com.example.deamhome.domain.model.ApiResponse
 

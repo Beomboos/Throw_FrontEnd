@@ -15,11 +15,12 @@ class KakaoRetrofit {
         private val HTTP_LOG_TAG = "HTTP_LOG"
 
         fun createInstance(): Retrofit {
+            val jsonConfig = Json { ignoreUnknownKeys = true }
             return Retrofit.Builder()
                 .baseUrl(BuildConfig.KAKAO_SERVER_URL)
                 .client(createOkHttpClient())
                 .addCallAdapterFactory(CallAdapterFactory())
-                .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+                .addConverterFactory(jsonConfig.asConverterFactory("application/json".toMediaType()))
                 .build()
         }
 

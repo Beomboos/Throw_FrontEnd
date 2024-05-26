@@ -27,9 +27,9 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
     }
 
     fun updateUi(stores: List<StoreResponse>){
-        var itemList = binding.storeList;
+        val itemList = binding.storeList;
 
-        var adapter = StoreAdapter(stores, viewModel::modifyService)
+        val adapter = StoreAdapter(stores, viewModel::modifyService)
         adapter.notifyDataSetChanged()
 
         itemList.adapter = adapter
@@ -39,7 +39,7 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
     fun handleEvnet(event: StoreViewModel.Event){
         when(event){
             StoreViewModel.Event.NavigateToRegister -> {
-                startActivity(RegisterActivity.getIntent(this@StoreActivity))
+                startActivityForResult(RegisterActivity.getIntent(this@StoreActivity), REQUEST_CODE)
             }
 
             is StoreViewModel.Event.NavigateToModify -> {
@@ -49,6 +49,7 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
 
     companion object{
         private const val MOVE_PROFILE_AFTER_STORE = "move_profile_after_store_tag"
+        private const val REQUEST_CODE: Int = 1
         fun getIntent(context: Context, moveToMain: Boolean = false): Intent {
             return Intent(context, StoreActivity::class.java).apply {
                 putExtra(MOVE_PROFILE_AFTER_STORE, moveToMain)

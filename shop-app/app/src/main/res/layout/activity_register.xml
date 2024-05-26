@@ -182,6 +182,7 @@
                         app:layout_constraintTop_toBottomOf="@id/address_title">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ti_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="주소"

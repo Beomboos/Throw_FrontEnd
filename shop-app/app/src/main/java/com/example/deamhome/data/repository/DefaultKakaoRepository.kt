@@ -2,7 +2,7 @@ package com.example.deamhome.data.repository
 
 import android.util.Log
 import com.example.deamhome.data.datasource.network.NetworkKakaoDataSource
-import com.example.deamhome.data.model.response.AddressResponse
+import com.example.deamhome.data.model.response.address.AddressResponse
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.KakaoRepository
 import kotlinx.coroutines.CoroutineDispatcher
