@@ -16,8 +16,14 @@
     <string name="password">비밀번호</string>
     <string name="password_confirm">비밀번호 확인</string>
     <string name="email">이메일</string>
-    <string name="nickname">닉네임</string>
+    <string name="email_send">이메일 전송</string>
+    <string name="email_check">인증번호</string>
+    <string name="email_check_button">인증</string>
+    <string name="nickname">이름</string>
+    <string name="birthday">생년월일</string>
     <string name="phone">전화번호</string>
+    <string name="gender">성별</string>
+    <string name="agreement">동의사항</string>
     <string name="login">로그인</string>
     <string name="account_search">계정조회</string>
     <string name="easy_social_login">간편 로그인</string>

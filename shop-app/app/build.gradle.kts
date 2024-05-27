@@ -13,6 +13,7 @@ plugins {
 val properties: Properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 val serverUrl = properties.getProperty("SERVER_URL")
+val serverUrl2 = properties.getProperty("SERVER_URL2")
 val keyStoreAlias = properties.getProperty("KEY_STORE_ALIAS")
 val keyStoreIv = properties.getProperty("KEY_STORE_IV")
 val kakaoKey = properties.getProperty("KAKAO_KEY")
@@ -32,6 +33,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "SERVER_URL", serverUrl)
+        buildConfigField("String", "SERVER_URL2", serverUrl2)
         buildConfigField("String", "KEY_STORE_ALIAS", keyStoreAlias)
         buildConfigField("String", "KEY_STORE_IV", keyStoreIv)
         buildConfigField("String", "KAKAO_KEY", kakaoKey)

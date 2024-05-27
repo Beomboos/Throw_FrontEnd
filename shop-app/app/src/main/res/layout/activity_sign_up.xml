@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.deamhome.presentation.auth.signup.SignUpViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,15 +37,6 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp">
 
-                <ImageView
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_arrow_back_ios_new_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,211 +53,430 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="45dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="45dp" />
+
         <ScrollView
             android:id="@+id/sv_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/btn_sighup_send"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintTop_toBottomOf="@id/tlb_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/gl_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_begin="68dp" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/gl_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_end="68dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nickname"
-                    style="@style/SignUpTextInputOutlinedBoxLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:hint="@string/nickname"
-                    android:paddingTop="0dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="20"
-                    app:expandedHintEnabled="false"
-                    app:helperText="추후 변경가능합니다"
-                    app:hintTextAppearance="@style/HintTextAppearance"
-                    app:layout_constraintEnd_toEndOf="@id/gl_end"
-                    app:layout_constraintStart_toStartOf="@id/gl_start"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etv_nickname"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:inputType="textPersonName"
-                        android:maxLength="20"
-                        android:maxLines="1"
-                        android:paddingVertical="6dp"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_id"
                     style="@style/SignUpTextInputOutlinedBoxLayout"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
                     android:hint="@string/id"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="20"
-                    app:helperText="20자 이내"
-                    app:layout_constraintEnd_toEndOf="@id/gl_end"
-                    app:layout_constraintStart_toStartOf="@id/gl_start"
-                    app:layout_constraintTop_toBottomOf="@id/til_nickname">
+                    android:paddingTop="0dp"
+                    app:endIconDrawable="@drawable/baseline_clear_24"
+                    app:endIconMode="clear_text"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etv_id"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:inputType="text"
+                        android:layout_height="36dp"
+                        android:hint="testId1234"
+                        android:inputType="textEmailAddress"
                         android:maxLength="20"
                         android:maxLines="1"
                         android:paddingVertical="6dp"
-                        android:textSize="20sp" />
-
+                        android:text="@={vm.id}"
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_pwd"
                     style="@style/SignUpTextInputOutlinedBoxLayout"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="4dp"
                     android:hint="@string/password"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="15"
+                    android:paddingTop="0dp"
                     app:endIconMode="password_toggle"
-                    app:helperText="15자 이내"
-                    app:layout_constraintEnd_toEndOf="@id/gl_end"
-                    app:layout_constraintStart_toStartOf="@id/gl_start"
+                    app:errorIconDrawable="@null"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_id">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etv_pwd"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="36dp"
+                        android:hint="********"
                         android:inputType="textPassword"
+                        android:maxLength="20"
                         android:maxLines="1"
                         android:paddingVertical="6dp"
-                        android:text="adfs"
-                        android:textSize="20sp" />
-
+                        android:text="@={vm.pw}"
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_pwd_confirm"
+                    android:id="@+id/til_pwd_check"
                     style="@style/SignUpTextInputOutlinedBoxLayout"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="4dp"
                     android:hint="@string/password_confirm"
+                    android:paddingTop="0dp"
                     app:endIconMode="password_toggle"
-                    app:helperText="비밀번호를 재입력해주세요"
-                    app:layout_constraintEnd_toEndOf="@id/gl_end"
-                    app:layout_constraintStart_toStartOf="@id/gl_start"
+                    app:errorIconDrawable="@null"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_pwd">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etv_pwd_confirm"
+                        android:id="@+id/etv_pwd_check"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="36dp"
+                        android:hint="********"
                         android:inputType="textPassword"
-                        android:maxLength="15"
+                        android:maxLength="20"
                         android:maxLines="1"
                         android:paddingVertical="6dp"
-                        android:text="adfs"
-                        android:textSize="20sp" />
-
+                        android:text="@={vm.pwCheck}"
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_email"
                     style="@style/SignUpTextInputOutlinedBoxLayout"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="4dp"
                     android:hint="@string/email"
-                    app:helperText="이메일을 입력해주세요"
-                    app:layout_constraintEnd_toEndOf="@id/gl_end"
-                    app:layout_constraintStart_toStartOf="@id/gl_start"
-                    app:layout_constraintTop_toBottomOf="@id/til_pwd_confirm">
+                    android:paddingTop="0dp"
+                    app:endIconDrawable="@drawable/baseline_clear_24"
+                    app:endIconMode="clear_text"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_pwd_check">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etv_email_confirm"
+                        android:id="@+id/etv_email"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="36dp"
+                        android:hint="testEmail1234@gmail.com"
                         android:inputType="textEmailAddress"
+                        android:maxLength="20"
                         android:maxLines="1"
                         android:paddingVertical="6dp"
-                        android:text="adfs"
-                        android:textSize="20sp" />
-
+                        android:text="@={vm.email}"
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <include
-                    android:id="@+id/dv_under_email"
-                    layout="@layout/view_divider_with_text_left"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginHorizontal="52dp"
-                    android:layout_marginTop="10dp"
+                <TextView
+                    android:id="@+id/btn_email"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/blue_button_radius_background"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/white_FFFFFF"
+                    android:textStyle="bold"
+                    android:padding="0dp"
+                    android:text="@string/email_send"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_email"
-                    bind:backgroundColor="@{@color/white_FFFFFF}"
-                    bind:text="@{@string/phone}" />
+                    android:onClick="@{()->vm.mailSend()}"
+                    />
+
+                <View
+                    android:id="@+id/vw1"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shadow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_email" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_phone"
-                    style="@style/SignUpTextInputFilledBoxLayout"
+                    android:id="@+id/til_email_check"
+                    style="@style/SignUpTextInputOutlinedBoxLayout"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:paddingTop="4dp"
-                    app:hintEnabled="false"
-                    app:layout_constraintEnd_toEndOf="@id/gl_end"
-                    app:layout_constraintStart_toStartOf="@id/gl_start"
-                    app:layout_constraintTop_toBottomOf="@id/dv_under_email">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/email_check"
+                    android:paddingTop="0dp"
+                    app:endIconDrawable="@drawable/baseline_clear_24"
+                    app:endIconMode="clear_text"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toStartOf="@id/btn_email_check"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vw1"
+                    app:layout_constraintWidth_percent="0.65">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etv_phone"
+                        android:id="@+id/etv_email_check"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_background"
-                        android:hint="- 를 제외하고 입력해주세요"
-                        android:importantForAutofill="no"
-                        android:inputType="phone"
-                        android:maxLength="15"
+                        android:layout_height="36dp"
+                        android:hint="AZ38SZ"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="20"
                         android:maxLines="1"
                         android:paddingVertical="6dp"
-                        android:textSize="20sp" />
-
+                        android:text="@={vm.emailConfirm}"
+                        android:textSize="12sp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:text="5:00"
+                    app:layout_constraintBottom_toBottomOf="@id/til_email_check"
+                    app:layout_constraintEnd_toEndOf="@id/til_email_check"
+                    app:layout_constraintTop_toTopOf="@id/til_email_check" />
 
+                <Button
+                    android:id="@+id/btn_email_check"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/blue_button_radius_background"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/white_FFFFFF"
+                    android:textStyle="bold"
+                    android:padding="0dp"
+                    android:text="@string/email_check_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/til_email_check"
+                    app:layout_constraintTop_toBottomOf="@id/vw1"
+                    android:onClick="@{()->vm.mailConfirm()}"/>
+
+                <View
+                    android:id="@+id/vw2"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shadow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_email_check" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_name"
+                    style="@style/SignUpTextInputOutlinedBoxLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/nickname"
+                    android:paddingTop="0dp"
+                    app:endIconDrawable="@drawable/baseline_clear_24"
+                    app:endIconMode="clear_text"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vw2">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:hint="홍길동"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="20"
+                        android:maxLines="1"
+                        android:paddingVertical="6dp"
+                        android:text="@={vm.name}"
+                        android:textSize="12sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_birthday"
+                    style="@style/SignUpTextInputOutlinedBoxLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/phone"
+                    android:paddingTop="0dp"
+                    app:endIconDrawable="@drawable/baseline_clear_24"
+                    app:endIconMode="clear_text"
+                    app:errorTextAppearance="@style/MyZeroSizeTextAppearance"
+                    app:expandedHintEnabled="false"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etv_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:hint="010-1234-1234"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="20"
+                        android:maxLines="1"
+                        android:paddingVertical="6dp"
+                        android:text="@={vm.phone}"
+                        android:textSize="12sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/vw3"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shadow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_birthday" />
+                <TextView
+                    android:id="@+id/tv_divider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/white_FFFFFF"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginLeft="32dp"
+                    android:text="@string/gender"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_birthday" />
+
+                <RadioGroup
+                    android:id="@+id/rdg_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vw3" >
+                    <RadioButton
+                        android:id="@+id/rd_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="남성"
+                        android:textSize="14dp"
+                        android:checked="@={vm.genderMale}"/>
+                    <RadioButton
+                        android:id="@+id/rd_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="여성"
+                        android:textSize="14dp"
+                        android:checked="@={vm.genderFemale}"/>
+                </RadioGroup>
+                <View
+                    android:id="@+id/vw4"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shadow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rdg_gender" />
+                <TextView
+                    android:id="@+id/tv_agreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/white_FFFFFF"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/agreement"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rdg_gender" />
+
+                <CheckBox
+                    android:id="@+id/ch_agreement1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="선택적 SNS광고 동의 여부"
+                    android:paddingEnd="5dp"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vw4"/>
+
+                <CheckBox
+                    android:id="@+id/ch_agreement2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:text="기타 고객정보 영리적 사용 등"
+                    android:paddingEnd="5dp"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ch_agreement1"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </ScrollView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sighup_send"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/vista_blue_80A1D4"
-            android:text="@string/signup"
+        <TextView
+            android:id="@+id/btn_signup"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/blue_button_radius_background"
+            android:elevation="2dp"
+            android:gravity="center"
             android:textColor="@color/white_FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
+            android:textStyle="bold"
+            android:padding="0dp"
+            android:text="@string/signup"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@id/sv_container"
+            android:onClick="@{()->vm.signUp()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

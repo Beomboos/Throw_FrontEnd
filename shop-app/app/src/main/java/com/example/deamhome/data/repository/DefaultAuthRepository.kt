@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.deamhome.data.datasource.local.LocalAuthDataSource
 import com.example.deamhome.data.datasource.network.NetworkAuthDataSource
 import com.example.deamhome.data.model.request.LoginRequest
+import com.example.deamhome.data.model.request.SignUpRequest
 import com.example.deamhome.data.model.response.Token
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.AuthRepository
@@ -69,6 +70,34 @@ class DefaultAuthRepository(
             localAuthDataSource.updateToken(token)
         }
     }
+
+    override suspend fun signUp(id: String, pwd: String, pwdCheck: String, name: String, phone: String, email: String): ApiResponse<Unit> {
+        return withContext(dispatcher) {
+            val response = networkAuthDataSource.signUp(
+                SignUpRequest(
+                    inputId = id,
+                    inputPassword = pwd,
+                    inputPasswordCheck = pwdCheck,
+                    sns = "NORMAL",
+                    userStatus = "NORMAL",
+                    role = "ROLE_USER",
+                    userName = name,
+                    userPhoneNumber = phone,
+                    email = email
+                )
+            )
+
+            if (response is ApiResponse.Success) {
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else {
+                Log.d(HTTP_LOG_TAG, response.toString())
+            }
+
+            response
+        }
+    }
+
     companion object{
         private val HTTP_LOG_TAG = "HTTP_LOG"
     }

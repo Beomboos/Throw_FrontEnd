@@ -40,7 +40,7 @@
                 android:id="@+id/iv_logo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@color/vista_blue_80A1D4"
+                android:src="@drawable/logo"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_start"

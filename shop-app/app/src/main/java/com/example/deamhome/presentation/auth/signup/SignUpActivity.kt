@@ -3,6 +3,7 @@ package com.example.deamhome.presentation.auth.signup
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
@@ -15,9 +16,11 @@ import com.example.deamhome.common.view.Toaster
 import com.example.deamhome.databinding.ActivitySignUpBinding
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
-    private val viewModel: SignUpViewModel by viewModels();
+    private val viewModel: SignUpViewModel by viewModels { SignUpViewModel.Factory };
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
         setupObserve()
         binding.etvId.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -36,50 +39,24 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
             }
         })
 
-        binding.etvPwdConfirm.addTextChangedListener(object : TextWatcher {
+
+        binding.etvPwdCheck.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
                 val text = s?.toString() ?: return
                 if (binding.etvPwd.text.toString() != text && text.isNotBlank()) {
-                    binding.tilPwdConfirm.error = "비밀번호를 다시 한 번 확인해주세요"
+                    binding.tilPwdCheck.error = "비밀번호를 다시 한 번 확인해주세요"
                 } else {
-                    binding.tilPwdConfirm.error = null
+                    binding.tilPwdCheck.error = null
                 }
             }
         })
-
-        if (savedInstanceState == null) {
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.tilNickname.requestFocus()
-                val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                inputManager.showSoftInput(binding.tilNickname, 0)
-            }, 100)
-        }
-
-        binding.etvEmailConfirm.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                log(tag = "mendel", "hi1")
-//                binding.etvEmailConfirm.setText(binding.etvEmailConfirm.toString() + "a")
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    binding.etvEmailConfirm.setText(
-//                        binding.etvEmailConfirm.toString().removeSuffix("a"),
-//                    )
-//                }, 100)
-            }
-        }
     }
 
     private fun setupObserve() {
         viewModel.event.observe(this@SignUpActivity) { handleEvent(it) }
-        viewModel.uiState.observe(this) {
-            when {
-                it.loading -> {}
-                it.error -> {}
-                else -> {}
-            }
-        }
     }
 
     private fun handleEvent(event: SignUpViewModel.Event) {
@@ -88,7 +65,54 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
                 Toaster.showShort(this@SignUpActivity, R.string.all_network_check_please_message)
             }
 
-            else -> {}
+            is SignUpViewModel.Event.MailErrorEvent -> {
+                Toaster.showShort(this@SignUpActivity, event.message)
+                if(event.message.contains("인증"))
+                    binding.tilEmailCheck.error = event.message
+                else
+                    binding.tilEmail.error = event.message
+            }
+
+            is SignUpViewModel.Event.SignUpErrorEvent -> {
+                failed(event.type, event.message)
+            }
+
+            SignUpViewModel.Event.MailSendSuccess -> {
+                Toaster.showShort(this@SignUpActivity, "메일을 전송했습니다.\n메일을 확인해주세요.")
+            }
+
+            SignUpViewModel.Event.MailConfirmSuccess -> {
+                binding.btnEmailCheck.isEnabled = false
+                binding.btnEmailCheck.text = "인증완료"
+            }
+
+            SignUpViewModel.Event.SignUpSuccessEvent -> {
+                Toaster.showShort(this@SignUpActivity,"정상적으로 회원가입이 완료되었습니다.")
+                finish()
+            }
+        }
+    }
+
+    private fun failed(type: ErrorType, message: String){
+        when(type){
+            ErrorType.ID -> {
+                binding.tilId.error = message
+            }
+            ErrorType.PWD -> {
+                binding.tilPwd.error = message
+            }
+            ErrorType.NAME -> {
+                binding.tilName.error = message
+            }
+            ErrorType.PHONE -> {
+                binding.tilBirthday.error = message
+            }
+            ErrorType.EMAIL -> {
+                binding.tilEmail.error = message
+            }
+            ErrorType.ANY -> {
+                Toaster.showShort(this@SignUpActivity, message)
+            }
         }
     }
 }

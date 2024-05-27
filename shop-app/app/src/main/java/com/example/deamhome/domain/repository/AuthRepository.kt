@@ -1,5 +1,6 @@
 package com.example.deamhome.domain.repository
 
+import com.example.deamhome.data.model.request.SignUpRequest
 import com.example.deamhome.data.model.response.Token
 import com.example.deamhome.domain.model.ApiResponse
 import kotlinx.coroutines.flow.Flow
@@ -11,5 +12,5 @@ interface AuthRepository {
     fun refreshToken()
     fun removeToken()
     fun updateToken(token: Token)
-//    fun signUp(signUpRequest: SignUpRequest): ApiResponse<String>
+    suspend fun signUp(id: String, pwd: String, pwdCheck: String, name: String, phone: String, email: String): ApiResponse<Unit>
 }

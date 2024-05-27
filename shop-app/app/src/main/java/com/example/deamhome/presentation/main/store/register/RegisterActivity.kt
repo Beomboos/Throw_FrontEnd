@@ -39,12 +39,12 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>(R.layout.activ
             }
 
             is RegisterViewModel.Event.RegisterFailed -> {
-                Toaster.showShort(applicationContext, evnet.message)
+                Toaster.showShort(this@RegisterActivity, evnet.message)
             }
 
             is RegisterViewModel.Event.CrnFailed -> {
                 binding.crnBtn.text = ""
-                Toaster.showShort(applicationContext, evnet.message)
+                Toaster.showShort(this@RegisterActivity, evnet.message)
             }
 
             RegisterViewModel.Event.NavigateToAddress -> {

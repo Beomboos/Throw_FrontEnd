@@ -8,11 +8,13 @@ import com.example.deamhome.R
 import com.example.deamhome.data.datasource.local.LocalAuthDataSource
 import com.example.deamhome.data.datasource.network.NetworkAuthDataSource
 import com.example.deamhome.data.datasource.network.NetworkKakaoDataSource
+import com.example.deamhome.data.datasource.network.NetworkMailDataSource
 import com.example.deamhome.data.datasource.network.NetworkProductDataSource
 import com.example.deamhome.data.datasource.network.NetworkStoreDataSource
 import com.example.deamhome.data.model.response.TokenSerializer
 import com.example.deamhome.data.repository.DefaultAuthRepository
 import com.example.deamhome.data.repository.DefaultKakaoRepository
+import com.example.deamhome.data.repository.DefaultMailReposity
 import com.example.deamhome.data.repository.DefaultProductRepository
 import com.example.deamhome.data.repository.DefaultStoreRepository
 import com.example.deamhome.data.retrofit.AuthRetrofit
@@ -20,11 +22,14 @@ import com.example.deamhome.data.retrofit.AuthService
 import com.example.deamhome.data.retrofit.DefaultRetrofit
 import com.example.deamhome.data.retrofit.KakaoRetrofit
 import com.example.deamhome.data.retrofit.KakaoService
+import com.example.deamhome.data.retrofit.MailRetrofit
+import com.example.deamhome.data.retrofit.MailService
 import com.example.deamhome.data.retrofit.ProductService
 import com.example.deamhome.data.retrofit.StoreService
 import com.example.deamhome.data.secure.CryptoManager
 import com.example.deamhome.domain.repository.AuthRepository
 import com.example.deamhome.domain.repository.KakaoRepository
+import com.example.deamhome.domain.repository.MailRepository
 import com.example.deamhome.domain.repository.ProductRepository
 import com.example.deamhome.domain.repository.StoreRepository
 
@@ -78,13 +83,8 @@ class DIContainer(
     private val networkKakaoDataSource = NetworkKakaoDataSource(kakaoService)
     val kakaoRepository: KakaoRepository = DefaultKakaoRepository(networkKakaoDataSource)
 
-
-//    private val productClient = DefaultRetrofit.createInstance(authRepository)
-//    private val productService = productClient.create(ProductService::class.java)
-//
-//    private val networkProductDataSource = NetworkProductDataSource(productService)
-//
-//    val productRepository = DefaultProductRepository(networkProductDataSource)
-//
-//    val userRepository = DefaultUserRepository()
+    private val mailClient = MailRetrofit.createInstance()
+    private val mailService = mailClient.create(MailService::class.java)
+    private val networkMailDataSource = NetworkMailDataSource(mailService)
+    val mailRepository: MailRepository = DefaultMailReposity(networkMailDataSource)
 }
