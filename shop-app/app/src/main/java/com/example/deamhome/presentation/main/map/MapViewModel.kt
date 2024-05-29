@@ -70,6 +70,10 @@ class MapViewModel(
         _refreshStoreLoading.value = false
     }
 
+    fun QR(){
+        _event.value = Event.NavigateToQR;
+    }
+
     // 카카오맵 줌 이벤트 리스너가 제대로 안먹힘. 먹혔다가 안먹혔다가 해서 일단 이건 고정으로 놓을 예정
     fun setVisibleMapDistance(bottomLeft: GeoPoint, topRight: GeoPoint) {
         val widthDistance = DistanceManager.getDistance(
@@ -292,6 +296,7 @@ class MapViewModel(
     sealed class Event {
         object ShowMapStoreInfo : Event()
         data class ToastMessage(val message: String) : Event()
+        object NavigateToQR: Event()
     }
 
     companion object {

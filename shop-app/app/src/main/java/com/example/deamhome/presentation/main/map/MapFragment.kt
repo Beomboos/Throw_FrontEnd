@@ -29,6 +29,7 @@ import com.example.deamhome.domain.model.MapStoreInfo
 import com.example.deamhome.domain.model.Trash
 import com.example.deamhome.presentation.main.map.storeInfo.MapStoreInfoFragment
 import com.example.deamhome.presentation.main.mypage.MyPageFragment
+import com.example.deamhome.presentation.main.qr.QRActivity
 import com.example.throw_fornt.util.common.ProgressDialog
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -212,6 +213,10 @@ class MapFragment : BindingFragment<FragmentMapBinding>(R.layout.fragment_map) {
                     requireContext(),
                     event.message,
                 )
+            }
+
+            is MapViewModel.Event.NavigateToQR -> {
+                startActivity(QRActivity.getIntent(requireContext()))
             }
         }
     }

@@ -46,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_throw_qr_22" />
+                    android:src="@drawable/ic_throw_qr_22"
+                    android:onClick="@{()->viewModel.QR()}"/>
 
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
