@@ -5,14 +5,15 @@
 
     <data>
         <variable
-            name="vm"
-            type="com.example.deamhome.presentation.main.qr.QRViewModel" />
+            name="viewModel"
+            type="com.example.deamhome.presentation.main.qr.ScanViewModel" />
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.main.qr.QRActivity"
+        tools:context=".presentation.main.qr.ScanActivity"
         android:background="#FFFFFF">
 
         <androidx.appcompat.widget.Toolbar
@@ -33,7 +34,7 @@
                     android:layout_marginLeft="16dp"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:text="가게QR"
+                    android:text="QR"
                     />
                 <View
                     android:layout_width="match_parent"
@@ -69,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="132dp"/>
+            app:layout_constraintGuide_begin="92dp"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_bottom"
@@ -94,9 +95,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintTop_toBottomOf="parent"
-                android:src="@drawable/ic_throw_qr_22"
-                setImageBitmap="@{vm.bitMap}" />
+                android:src="@drawable/qr_image" />
+
+            <Button
+                android:id="@+id/QRCamera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/text_input_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/im_QR"
+                android:text="카메라"
+                android:onClick="@{()->viewModel.camera()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            isVisible="@{viewModel.isLoading}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

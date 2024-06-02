@@ -7,6 +7,7 @@ import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.data.model.response.StoreInfoBySearchNameResponse
 import com.example.deamhome.data.model.response.StoresInfoByLocationResponse
 import com.example.deamhome.domain.model.ApiResponse
+import okhttp3.ResponseBody
 
 interface StoreRepository {
     suspend fun storeSearchName(name: String): ApiResponse<List<StoreInfoBySearchNameResponse>>
@@ -16,4 +17,6 @@ interface StoreRepository {
     suspend fun register(register: RegisterRequest): ApiResponse<String>
     suspend fun modify(modify: ModifyRequest): ApiResponse<StoreResponse>
     suspend fun delete(extStoreId: String): ApiResponse<Unit>
+    suspend fun qr(extStoreId: String): ApiResponse<ResponseBody>
+    suspend fun mileageUpdate(extStoreId: String): ApiResponse<Unit>
 }

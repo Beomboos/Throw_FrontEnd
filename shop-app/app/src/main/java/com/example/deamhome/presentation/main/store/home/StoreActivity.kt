@@ -11,6 +11,7 @@ import com.example.deamhome.common.base.BindingActivity
 import com.example.deamhome.data.model.response.StoreResponse
 import com.example.deamhome.data.model.response.address.DocumentResponse
 import com.example.deamhome.databinding.ActivityStoreBinding
+import com.example.deamhome.presentation.main.qr.QRActivity
 import com.example.deamhome.presentation.main.store.modify.ModifyActivity
 import com.example.deamhome.presentation.main.store.register.RegisterActivity
 
@@ -43,6 +44,9 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
         when(event){
             StoreViewModel.Event.NavigateToRegister -> {
                 startActivityForResult(RegisterActivity.getIntent(this@StoreActivity), REQUEST_CODE)
+            }
+            StoreViewModel.Event.NavigateToQR -> {
+                startActivity(QRActivity.getIntent(this@StoreActivity))
             }
 
             is StoreViewModel.Event.NavigateToModify -> {

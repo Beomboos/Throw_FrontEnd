@@ -5,6 +5,7 @@ import com.example.deamhome.data.datasource.network.NetworkStoreDataSource
 import com.example.deamhome.data.model.request.CrnRequest
 import com.example.deamhome.data.model.request.DeleteRequest
 import com.example.deamhome.data.model.request.ModifyRequest
+import com.example.deamhome.data.model.request.QRRequest
 import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
@@ -17,6 +18,7 @@ import com.example.deamhome.domain.repository.StoreRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 
 class DefaultStoreRepository(
     private val networkStoreDataSource: NetworkStoreDataSource,
@@ -145,6 +147,42 @@ class DefaultStoreRepository(
                     zipCode = modify.zipCode,
                     fullAddress = modify.fullAddress,
                     trashType = modify.trashType
+                )
+            )
+
+            if(response is ApiResponse.Success){
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else
+                Log.d(HTTP_LOG_TAG, response.toString());
+
+            response
+        }
+    }
+
+    override suspend fun qr(extStoreId: String): ApiResponse<ResponseBody> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.qr(
+                QRRequest(
+                    extStoreId = extStoreId
+                )
+            )
+
+            if(response is ApiResponse.Success){
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+            else
+                Log.d(HTTP_LOG_TAG, response.toString());
+
+            response
+        }
+    }
+
+    override suspend fun mileageUpdate(extStoreId: String): ApiResponse<Unit> {
+        return withContext(dispatcher){
+            val response = networkStoreDataSource.mileageUpdate(
+                QRRequest(
+                    extStoreId = extStoreId
                 )
             )
 

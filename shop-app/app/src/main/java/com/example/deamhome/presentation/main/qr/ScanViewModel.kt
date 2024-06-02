@@ -1,7 +1,5 @@
 package com.example.deamhome.presentation.main.qr
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -9,15 +7,13 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.deamhome.app.DeamHomeApplication
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.StoreRepository
-import com.example.deamhome.presentation.main.store.home.StoreViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class QRViewModel(
+class ScanViewModel(
     private val storeRepository: StoreRepository
 ): ViewModel() {
 
@@ -25,38 +21,44 @@ class QRViewModel(
     val event: SharedFlow<Event>
         get() = _event
 
-    private val _bitMap: MutableStateFlow<Bitmap> = MutableStateFlow(Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888));
-    val bitMap: StateFlow<Bitmap>
-        get() = _bitMap
+    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean>
+        get() = _isLoading
 
-    init{
-        viewModelScope.launch{
-            when(val response = storeRepository.qr("0d01aa11-25cd-46c7-8577-f25788008b4b")){
+    fun camera(){
+        viewModelScope.launch {
+            _event.emit(Event.NavigateToCamera);
+        }
+    }
+
+    fun scan(scan: String){
+        synchronized(this) {
+            if (_isLoading.value) return
+            _isLoading.value = true
+        }
+        viewModelScope.launch {
+            when(val response = storeRepository.mileageUpdate(scan)){
                 is ApiResponse.Success -> {
-                    response.body.let {responseBody ->
-                        val inputStream = responseBody.byteStream()
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        _bitMap.update {
-                            bitmap
-                        }
-                    }
+                    _event.emit(Event.MileageUpdate("마일리지가 변경 되었습니다."));
                 }
 
                 is ApiResponse.Failure -> {
-
+                    _event.emit(Event.MileageUpdate("마일리지 변경에 실패하였습니다."));
                 }
 
                 else -> {
-
+                    _event.emit(Event.MileageUpdate("알 수 없는 에러가 발생하였습니다."));
                 }
             }
+            _isLoading.value = false
         }
     }
 
     sealed interface Event{
         data object NavigateToCamera: Event
-    }
 
+        data class MileageUpdate(val message: String): Event
+    }
     companion object{
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -64,7 +66,7 @@ class QRViewModel(
                 modelClass: Class<T>,
                 extras: CreationExtras,
             ): T {
-                return QRViewModel(
+                return ScanViewModel(
                     DeamHomeApplication.container.storeRepository,
                 ) as T
             }

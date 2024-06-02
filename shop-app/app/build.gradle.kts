@@ -130,4 +130,5 @@ dependencies {
 
     implementation(files("libs/libDaumMapAndroid.jar"))
 
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 }

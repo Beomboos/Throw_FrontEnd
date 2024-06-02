@@ -3,6 +3,7 @@ package com.example.deamhome.data.datasource.network
 import com.example.deamhome.data.model.request.CrnRequest
 import com.example.deamhome.data.model.request.DeleteRequest
 import com.example.deamhome.data.model.request.ModifyRequest
+import com.example.deamhome.data.model.request.QRRequest
 import com.example.deamhome.data.model.request.RegisterRequest
 import com.example.deamhome.data.model.request.StoreSearchLocationRequest
 import com.example.deamhome.data.model.request.StoreSearchNameRequest
@@ -12,6 +13,7 @@ import com.example.deamhome.data.model.response.StoreInfoBySearchNameResponse
 import com.example.deamhome.data.model.response.StoresInfoByLocationResponse
 import com.example.deamhome.data.retrofit.StoreService
 import com.example.deamhome.domain.model.ApiResponse
+import okhttp3.ResponseBody
 
 class NetworkStoreDataSource(
     private val service: StoreService
@@ -40,5 +42,13 @@ class NetworkStoreDataSource(
 
     suspend fun delete(deleteRequest: DeleteRequest): ApiResponse<Unit>{
         return service.delete(deleteRequest)
+    }
+
+    suspend fun qr(qrRequest: QRRequest): ApiResponse<ResponseBody>{
+        return service.qr(qrRequest)
+    }
+
+    suspend fun mileageUpdate(qrRequest: QRRequest): ApiResponse<Unit>{
+        return service.mileageUpdate(qrRequest)
     }
 }

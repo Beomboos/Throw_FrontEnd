@@ -72,6 +72,7 @@ class StoreViewModel(
 
     sealed interface Event{
         data object NavigateToRegister: Event
+        data object NavigateToQR: Event
         data class NavigateToModify(val store: StoreResponse): Event
     }
 
