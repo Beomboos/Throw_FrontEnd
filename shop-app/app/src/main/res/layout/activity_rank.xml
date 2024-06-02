@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.deamhome.presentation.main.rank.RankViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.main.rank.RankActivity"
+        android:background="#FFFFFF">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:text="마일리지/랭킹 조회"
+                    android:textStyle="bold"
+                    android:textSize="20dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="#7A7A7A" />
+
+                <Button
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ic_chevron_right_24"
+                    android:backgroundTint="#000000"
+                    android:onClick="@{()->viewModel.backBtn()}" />
+            </FrameLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_mileage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@id/tb_toolbar"
+            app:layout_constraintBottom_toTopOf="@id/view1"
+            app:layout_constraintHeight_percent="0.2">
+            <LinearLayout
+                android:id="@+id/ln_total_mileage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_border"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/ln_my_rank"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginVertical="16dp"
+                android:layout_marginRight="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="총 마일리지"
+                    android:textSize="15dp"
+                    android:textColor="#636363"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ln_my_rank"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_border"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ln_total_mileage"
+                android:layout_marginVertical="16dp"
+                android:layout_marginLeft="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="나의 랭킹"
+                    android:textSize="15dp"
+                    android:textColor="#636363"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_rank"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@id/view1"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_rank"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_rank_list"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginVertical="12dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom"
+            android:background="#F4F4F4"
+            app:layout_constraintTop_toBottomOf="@id/constraint_mileage"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
