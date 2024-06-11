@@ -1,6 +1,7 @@
 package com.example.deamhome.presentation.auth.signup
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -44,6 +45,8 @@ class SignUpViewModel(
     val phone: MutableStateFlow<String> = MutableStateFlow("")
     val genderMale: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val genderFemale: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    val btn: MutableLiveData<Boolean> = MutableLiveData<Boolean>(true)
 
     private val _isTimer: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isTimer: StateFlow<Boolean>
@@ -105,6 +108,7 @@ class SignUpViewModel(
                 }
             }
         }
+        _isLoading.value = false
     }
 
     fun signUp(){

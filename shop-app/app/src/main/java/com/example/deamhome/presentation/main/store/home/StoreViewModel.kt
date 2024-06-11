@@ -46,11 +46,12 @@ class StoreViewModel(
                 }
 
                 is ApiResponse.Failure -> {
-
                 }
 
                 else -> {
-
+                    if(response.toString().contains("Response body")){
+                        myStoreResponse.update { emptyList() }
+                    }
                 }
             }
 
