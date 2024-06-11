@@ -13,6 +13,7 @@ import com.example.deamhome.databinding.FragmentMyPageBinding
 import com.example.deamhome.domain.model.UserProfile
 import com.example.deamhome.presentation.auth.login.LoginActivity
 import com.example.deamhome.presentation.main.mypage.profile.ProfileActivity
+import com.example.deamhome.presentation.main.rank.RankActivity
 import com.example.deamhome.presentation.main.store.home.StoreActivity
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
@@ -62,7 +63,9 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
                 startActivityForResult(ProfileActivity.getIntent(requireContext(), event.user),REQUEST_CODE)
             }
 
-            MyPageViewModel.Event.NavigateToMileage -> {}
+            is MyPageViewModel.Event.NavigateToMileage -> {
+                startActivityForResult(RankActivity.getIntent(requireContext(), event.user),REQUEST_CODE)
+            }
 
             MyPageViewModel.Event.NavigateToStore -> {
                 startActivity(

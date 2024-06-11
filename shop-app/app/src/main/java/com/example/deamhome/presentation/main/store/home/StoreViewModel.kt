@@ -70,9 +70,15 @@ class StoreViewModel(
         }
     }
 
+    fun scan(store: StoreResponse){
+        viewModelScope.launch {
+            _event.emit(Event.NavigateToQR(store.extStoreId))
+        }
+    }
+
     sealed interface Event{
         data object NavigateToRegister: Event
-        data object NavigateToQR: Event
+        data class NavigateToQR(val extStoreId: String): Event
         data class NavigateToModify(val store: StoreResponse): Event
     }
 

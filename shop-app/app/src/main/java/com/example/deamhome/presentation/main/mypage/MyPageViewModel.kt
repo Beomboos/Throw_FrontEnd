@@ -57,6 +57,9 @@ class MyPageViewModel(
 
     //마일리지/상품 구매 버튼이벤트
     fun mileage(){
+        viewModelScope.launch {
+            _event.emit(Event.NavigateToMileage(_profileUiState.value.data))
+        }
     }
 
 
@@ -137,7 +140,7 @@ class MyPageViewModel(
         data object NavigateToLogin : Event
         data class NavigateToProfile(val user: UserProfile) : Event
         data object NavigateToStore : Event
-        data object NavigateToMileage : Event
+        data class NavigateToMileage(val user: UserProfile) : Event
         data class FailedMessage(val message: String) : Event
     }
 

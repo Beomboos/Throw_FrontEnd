@@ -102,7 +102,8 @@
                     android:layout_gravity="center"
                     android:textSize="25dp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:text="@{viewModel.mileage}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -158,6 +159,16 @@
             android:layout_gravity="bottom"
             android:background="#F4F4F4"
             app:layout_constraintTop_toBottomOf="@id/constraint_mileage"/>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            isVisible="@{viewModel.isLoading}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

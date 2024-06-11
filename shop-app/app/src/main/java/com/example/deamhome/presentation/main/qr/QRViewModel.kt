@@ -30,8 +30,11 @@ class QRViewModel(
         get() = _bitMap
 
     init{
+    }
+
+    fun qr(extStoreId: String){
         viewModelScope.launch{
-            when(val response = storeRepository.qr("0d01aa11-25cd-46c7-8577-f25788008b4b")){
+            when(val response = storeRepository.qr(extStoreId)){
                 is ApiResponse.Success -> {
                     response.body.let {responseBody ->
                         val inputStream = responseBody.byteStream()

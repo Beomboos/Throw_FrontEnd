@@ -33,7 +33,11 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
     fun updateUi(stores: List<StoreResponse>){
         val itemList = binding.storeList;
 
-        val adapter = StoreAdapter(stores, viewModel::modifyService)
+        val adapter = StoreAdapter(
+            items = stores,
+            onManageStoreClick = {store -> viewModel.modifyService(store)},
+            onScanQrClick = {store -> viewModel.scan(store)}
+        )
         adapter.notifyDataSetChanged()
 
         itemList.adapter = adapter
@@ -45,8 +49,8 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
             StoreViewModel.Event.NavigateToRegister -> {
                 startActivityForResult(RegisterActivity.getIntent(this@StoreActivity), REQUEST_CODE)
             }
-            StoreViewModel.Event.NavigateToQR -> {
-                startActivity(QRActivity.getIntent(this@StoreActivity))
+            is StoreViewModel.Event.NavigateToQR -> {
+                startActivity(QRActivity.getIntent(this@StoreActivity, event.extStoreId))
             }
 
             is StoreViewModel.Event.NavigateToModify -> {

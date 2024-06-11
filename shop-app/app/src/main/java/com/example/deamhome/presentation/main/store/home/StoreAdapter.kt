@@ -4,26 +4,51 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.deamhome.R
 import com.example.deamhome.data.model.response.StoreResponse
+import kotlin.coroutines.coroutineContext
 
 //RecyclerView를 list_view_item.xml을 연결해주기 위한 adapter이다
-class StoreAdapter(private var items: List<StoreResponse>, val onClick: (StoreResponse)->Unit): RecyclerView.Adapter<StoreAdapter.StoreViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreViewHolder{
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_store_list, parent,false)
+class StoreAdapter(
+    private var items: List<StoreResponse>,
+    val onManageStoreClick: (StoreResponse) -> Unit,
+    val onScanQrClick: (StoreResponse) -> Unit
+): RecyclerView.Adapter<StoreAdapter.StoreViewHolder>(){
+    private var expandedPosition = -1 // 확장된 아이템의 위치를 저장
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_store_list, parent, false)
         return StoreViewHolder(view)
     }
 
-    //list_view_item.xml과 연동된 TextView의 값을 리스트 마다 지정해줌
     override fun onBindViewHolder(holder: StoreViewHolder, position: Int) {
-        holder.storeName.text = items[position].storeName
-        holder.storeType.text = trashTypeTransform(items[position].trashType)
-        holder.storeImg.setImageURI(Uri.parse("https://www.bizhankook.com/upload/bk/article/202002/thumb/19402-44437-sampleM.jpg"))
-        holder.itemView.setOnClickListener{
-            onClick(items[position])
+        val item = items[position]
+        holder.storeName.text = item.storeName
+        holder.storeType.text = trashTypeTransform(item.trashType)
+
+        Glide.with(holder.storeImg.context)
+            .load("https://www.bizhankook.com/upload/bk/article/202002/thumb/19402-44437-sampleM.jpg")
+            .into(holder.storeImg)
+
+        val isExpanded = position == expandedPosition
+        holder.expandedLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
+        holder.itemView.setOnClickListener {
+            expandedPosition = if (isExpanded) -1 else position
+            notifyDataSetChanged()
+        }
+
+        holder.btnManageStore.setOnClickListener {
+            onManageStoreClick(item)
+        }
+
+        holder.btnScanQr.setOnClickListener {
+            onScanQrClick(item)
         }
     }
 
@@ -51,6 +76,9 @@ class StoreAdapter(private var items: List<StoreResponse>, val onClick: (StoreRe
     inner class StoreViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val storeName = itemView.findViewById<TextView>(R.id.store_name)
         val storeType = itemView.findViewById<TextView>(R.id.store_type)
-        val storeImg = itemView.findViewById<ImageView>(R.id.iv_store_image)
+        val storeImg = itemView.findViewById<ImageView>(R.id.iv_image_store)
+        val expandedLayout = itemView.findViewById<LinearLayout>(R.id.expanded_layout)
+        val btnManageStore = itemView.findViewById<Button>(R.id.btn_manage_store)
+        val btnScanQr = itemView.findViewById<Button>(R.id.btn_scan_qr)
     }
 }

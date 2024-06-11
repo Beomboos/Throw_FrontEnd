@@ -10,12 +10,14 @@ import com.example.deamhome.data.datasource.network.NetworkAuthDataSource
 import com.example.deamhome.data.datasource.network.NetworkKakaoDataSource
 import com.example.deamhome.data.datasource.network.NetworkMailDataSource
 import com.example.deamhome.data.datasource.network.NetworkProductDataSource
+import com.example.deamhome.data.datasource.network.NetworkRankDataSource
 import com.example.deamhome.data.datasource.network.NetworkStoreDataSource
 import com.example.deamhome.data.model.response.TokenSerializer
 import com.example.deamhome.data.repository.DefaultAuthRepository
 import com.example.deamhome.data.repository.DefaultKakaoRepository
 import com.example.deamhome.data.repository.DefaultMailReposity
 import com.example.deamhome.data.repository.DefaultProductRepository
+import com.example.deamhome.data.repository.DefaultRankRepository
 import com.example.deamhome.data.repository.DefaultStoreRepository
 import com.example.deamhome.data.retrofit.AuthRetrofit
 import com.example.deamhome.data.retrofit.AuthService
@@ -25,12 +27,14 @@ import com.example.deamhome.data.retrofit.KakaoService
 import com.example.deamhome.data.retrofit.MailRetrofit
 import com.example.deamhome.data.retrofit.MailService
 import com.example.deamhome.data.retrofit.ProductService
+import com.example.deamhome.data.retrofit.RankService
 import com.example.deamhome.data.retrofit.StoreService
 import com.example.deamhome.data.secure.CryptoManager
 import com.example.deamhome.domain.repository.AuthRepository
 import com.example.deamhome.domain.repository.KakaoRepository
 import com.example.deamhome.domain.repository.MailRepository
 import com.example.deamhome.domain.repository.ProductRepository
+import com.example.deamhome.domain.repository.RankRepository
 import com.example.deamhome.domain.repository.StoreRepository
 
 // 객체 생성을 애플리케이션 객체 초기화시 이렇게 모두 해버리면 앱 시작이 늦어질 수 있음. 싱글톤 패턴으로 분리예정
@@ -87,4 +91,9 @@ class DIContainer(
     private val mailService = mailClient.create(MailService::class.java)
     private val networkMailDataSource = NetworkMailDataSource(mailService)
     val mailRepository: MailRepository = DefaultMailReposity(networkMailDataSource)
+
+    private val rankClient = DefaultRetrofit.createInstance(authRepository)
+    private val rankService = rankClient.create(RankService::class.java)
+    private val networkRankDataSource = NetworkRankDataSource(rankService)
+    val rankRepository: RankRepository = DefaultRankRepository(networkRankDataSource)
 }
