@@ -9,7 +9,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/rank_view_style"
         android:paddingVertical="30dp"
-        android:elevation="10dp">
+        android:elevation="3dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_begin"

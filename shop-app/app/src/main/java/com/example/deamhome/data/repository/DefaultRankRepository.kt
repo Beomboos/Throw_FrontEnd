@@ -5,6 +5,7 @@ import com.example.deamhome.data.datasource.network.NetworkRankDataSource
 import com.example.deamhome.data.model.request.RankerStoreRequest
 import com.example.deamhome.data.model.response.LeaderboardResponse
 import com.example.deamhome.data.model.response.RankerStore
+import com.example.deamhome.data.model.response.RankingResponse
 import com.example.deamhome.domain.model.ApiResponse
 import com.example.deamhome.domain.repository.RankRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,6 +38,22 @@ class DefaultRankRepository(
                     inputId = inputId
                 )
             )
+
+            if (response is ApiResponse.Success) {
+                Log.d(HTTP_LOG_TAG,"Success")
+            }
+
+            else if(response is ApiResponse.Failure){
+                Log.d(HTTP_LOG_TAG, response.toString());
+            }
+
+            response
+        }
+    }
+
+    override suspend fun ranking(): ApiResponse<RankingResponse> {
+        return withContext(dispatcher){
+            val response = networkRankDataSource.ranking()
 
             if (response is ApiResponse.Success) {
                 Log.d(HTTP_LOG_TAG,"Success")

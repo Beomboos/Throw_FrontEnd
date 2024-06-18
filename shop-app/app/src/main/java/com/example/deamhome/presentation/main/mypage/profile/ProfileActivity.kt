@@ -47,7 +47,6 @@ class ProfileActivity : BindingActivity<ActivityProfileBinding>(R.layout.activit
                 intent.putExtra("data", USER_PROFILE);
                 setResult(RESULT_OK, intent)
                 finish()
-                finish()
             }
 
             is ProfileViewModel.Event.ModifyFailed -> {

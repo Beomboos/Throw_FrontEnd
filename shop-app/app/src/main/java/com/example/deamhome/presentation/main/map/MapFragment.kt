@@ -28,8 +28,6 @@ import com.example.deamhome.domain.model.GeoPoint
 import com.example.deamhome.domain.model.MapStoreInfo
 import com.example.deamhome.domain.model.Trash
 import com.example.deamhome.presentation.main.map.storeInfo.MapStoreInfoFragment
-import com.example.deamhome.presentation.main.mypage.MyPageFragment
-import com.example.deamhome.presentation.main.qr.QRActivity
 import com.example.deamhome.presentation.main.qr.ScanActivity
 import com.example.throw_fornt.util.common.ProgressDialog
 import com.google.android.gms.location.FusedLocationProviderClient

@@ -38,15 +38,19 @@ class RankAdapter(
 
         if(item.ranking.toInt()==1) {
             holder.rankNumber.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#E8BB4F"))
-            holder.rankText.setTextColor(Color.parseColor("#F8EBBA"))
+            holder.rankText.setTextColor(Color.parseColor("#FFFFFF"))
         }
         else if(item.ranking.toInt()==2) {
             holder.rankNumber.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#B3D3F0"))
-            holder.rankText.setTextColor(Color.parseColor("#E4F2FE"))
+            holder.rankText.setTextColor(Color.parseColor("#FFFFFF"))
         }
         else if(item.ranking.toInt()==3) {
             holder.rankNumber.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#E2A179"))
-            holder.rankText.setTextColor(Color.parseColor("#EDC3B5"))
+            holder.rankText.setTextColor(Color.parseColor("#FFFFFF"))
+        }
+        else{
+            holder.rankNumber.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D1D5D8"))
+            holder.rankText.setTextColor(Color.parseColor("#000000"))
         }
 
         val isExpanded = position == expandedPosition

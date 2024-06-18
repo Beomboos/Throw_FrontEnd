@@ -107,8 +107,8 @@ class SignUpViewModel(
                     _event.emit(Event.MailErrorEvent("알 수 없는 에러입니다."))
                 }
             }
+            _isLoading.value = false
         }
-        _isLoading.value = false
     }
 
     fun signUp(){

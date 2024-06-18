@@ -55,7 +55,8 @@
                     android:background="@drawable/ic_chevron_right_24"
                     android:backgroundTint="#000000"
                     android:layout_marginEnd="16dp"
-                    android:layout_gravity="center_vertical|end"/>
+                    android:layout_gravity="center_vertical|end"
+                    android:onClick="@{()->viewModel.back()}"/>
             </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
 

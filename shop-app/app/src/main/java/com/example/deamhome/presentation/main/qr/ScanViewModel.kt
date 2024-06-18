@@ -31,6 +31,12 @@ class ScanViewModel(
         }
     }
 
+    fun back(){
+        viewModelScope.launch{
+            _event.emit(Event.Back);
+        }
+    }
+
     fun scan(scan: String){
         synchronized(this) {
             if (_isLoading.value) return
@@ -56,7 +62,7 @@ class ScanViewModel(
 
     sealed interface Event{
         data object NavigateToCamera: Event
-
+        data object Back: Event
         data class MileageUpdate(val message: String): Event
     }
     companion object{

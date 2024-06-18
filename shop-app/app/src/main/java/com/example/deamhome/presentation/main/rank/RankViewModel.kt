@@ -38,7 +38,8 @@ class RankViewModel(
     val uiStore: StateFlow<List<RankerStore>>
         get() = _uiStore
 
-    val mileage: MutableStateFlow<String> = MutableStateFlow("")
+    val mileage: MutableStateFlow<String> = MutableStateFlow("0M")
+    val ranking: MutableStateFlow<String> = MutableStateFlow("0위");
 
     init {
         leaderboader();
@@ -64,11 +65,23 @@ class RankViewModel(
                 }
 
                 is ApiResponse.Failure -> {
-
+                    _event.emit(Event.Failed("조회 실패"));
                 }
 
                 else -> {
+                    _event.emit(Event.Failed("조회 실패"));
+                }
+            }
 
+            when(val response = rankRepository.ranking()){
+                is ApiResponse.Success -> {
+                    ranking.value = response.body.ranking.toString()+"위";
+                }
+                is ApiResponse.Failure -> {
+                    _event.emit(Event.Failed("조회 실패"));
+                }
+                else -> {
+                    _event.emit(Event.Failed("조회 실패"));
                 }
             }
 
@@ -90,11 +103,11 @@ class RankViewModel(
                 }
 
                 is ApiResponse.Failure -> {
-
+                    _event.emit(Event.Failed("조회 실패"));
                 }
 
                 else -> {
-
+                    _event.emit(Event.Failed("조회 실패"));
                 }
             }
         }
@@ -103,11 +116,15 @@ class RankViewModel(
     }
 
     fun backBtn() {
-
+        viewModelScope.launch {
+            _event.emit(Event.Back);
+        }
     }
 
 
     sealed interface Event {
+        data class Failed(val msg: String): Event
+        data object Back: Event
     }
 
     companion object {

@@ -478,6 +478,16 @@
             app:layout_constraintTop_toBottomOf="@id/sv_container"
             android:enabled="@{vm.btn}"
             android:onClick="@{()->vm.signUp()}"/>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            isVisible="@{vm.isLoading}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

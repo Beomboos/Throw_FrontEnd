@@ -59,6 +59,9 @@ class ScanActivity : BindingActivity<ActivityScanBinding>(R.layout.activity_scan
             is ScanViewModel.Event.MileageUpdate -> Toaster.showShort(this@ScanActivity, event.message);
             ScanViewModel.Event.NavigateToCamera ->
                 openCamera()
+            ScanViewModel.Event.Back -> {
+                finish()
+            }
         }
     }
 

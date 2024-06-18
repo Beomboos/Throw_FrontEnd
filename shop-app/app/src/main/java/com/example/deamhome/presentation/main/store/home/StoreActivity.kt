@@ -56,6 +56,7 @@ class StoreActivity : BindingActivity<ActivityStoreBinding>(R.layout.activity_st
             is StoreViewModel.Event.NavigateToModify -> {
                 startActivityForResult(ModifyActivity.getIntent(this@StoreActivity, event.store), REQUEST_CODE)
             }
+            StoreViewModel.Event.Back -> finish()
         }
     }
 

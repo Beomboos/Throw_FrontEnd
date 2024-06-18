@@ -77,10 +77,17 @@ class StoreViewModel(
         }
     }
 
+    fun back(){
+        viewModelScope.launch{
+            _event.emit(Event.Back)
+        }
+    }
+
     sealed interface Event{
         data object NavigateToRegister: Event
         data class NavigateToQR(val extStoreId: String): Event
         data class NavigateToModify(val store: StoreResponse): Event
+        data object Back: Event
     }
 
     companion object {

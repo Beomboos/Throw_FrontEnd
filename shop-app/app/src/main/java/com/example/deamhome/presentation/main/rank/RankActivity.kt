@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deamhome.R
 import com.example.deamhome.common.base.BindingActivity
+import com.example.deamhome.common.view.Toaster
 import com.example.deamhome.data.model.response.LeaderboardResponse
 import com.example.deamhome.data.model.response.RankerStore
 import com.example.deamhome.databinding.ActivityRankBinding
@@ -41,7 +42,14 @@ class RankActivity : BindingActivity<ActivityRankBinding>(R.layout.activity_rank
     }
 
     private fun handleEvent(event: RankViewModel.Event){
-
+        when(event){
+            is RankViewModel.Event.Failed -> {
+                Toaster.showShort(this@RankActivity, event.msg);
+            }
+            else -> {
+                finish();
+            }
+        }
     }
 
     private fun updateUi(items: List<LeaderboardResponse>){

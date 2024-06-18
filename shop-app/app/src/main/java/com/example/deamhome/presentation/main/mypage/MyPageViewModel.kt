@@ -29,8 +29,6 @@ class MyPageViewModel(
     val isLoading: StateFlow<Boolean>
         get() = _isLoading
 
-    val mileage: MutableStateFlow<String> = MutableStateFlow("")
-
     // 유저 정보 조회에 대한 UiState
     private val _profileUiState: MutableStateFlow<ProfileUiState> = MutableStateFlow(
         ProfileUiState(

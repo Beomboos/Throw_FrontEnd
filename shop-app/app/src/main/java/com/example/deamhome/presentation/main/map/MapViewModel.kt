@@ -154,12 +154,12 @@ class MapViewModel(
                     }
 
                     is ApiResponse.Failure -> {
-                        _event.value = Event.ToastMessage("가게 목록을 불러오는 과정에서 문제가 발생했습니다.")
+                        _event.value = Event.ToastMessage("주변에 가게가 존재하지 않습니다.")
                         stopLoading()
                     }
 
                     else -> {
-                        _event.value = Event.ToastMessage("가게 목록을 불러오는 과정에서 문제가 발생했습니다.")
+                        _event.value = Event.ToastMessage("주변에 가게가 존재하지 않습니다.")
                         stopLoading()
                     }
                 }

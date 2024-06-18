@@ -133,8 +133,7 @@
                                 android:id="@+id/total_mileage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:text="@{viewModel.mileage}"/>
+                                android:layout_gravity="end"/>
                         </FrameLayout>
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -149,8 +148,7 @@
                                 android:id="@+id/use_mileage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:text="@{viewModel.mileage}"/>
+                                android:layout_gravity="end"/>
                         </FrameLayout>
                     </LinearLayout>
                 </FrameLayout>

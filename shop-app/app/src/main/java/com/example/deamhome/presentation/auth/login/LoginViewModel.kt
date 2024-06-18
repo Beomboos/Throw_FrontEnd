@@ -85,7 +85,9 @@ class LoginViewModel(
                     )
                 }
 
-                else -> {}
+                else -> {
+                    Event.LoginFailed("알 수 없는 에러가 발생했습니다.")
+                }
             }
             _isLoading.value = false
         }
