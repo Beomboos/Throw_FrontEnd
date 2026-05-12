@@ -31,9 +31,3 @@
 > 아래 영상은 앱의 주요 화면 흐름과 기능을 보여주는 데모 영상입니다.
 
 <video src="./assets/demo.mp4" controls width="100%"></video>
-
-영상이 GitHub에서 바로 보이지 않는 경우,  
-`assets/demo.mp4` 대신 GitHub Issue나 Release에 업로드한 영상 URL을 사용하면 됩니다.
-
-```md
-<video src="영상_URL" controls width="100%"></video>
