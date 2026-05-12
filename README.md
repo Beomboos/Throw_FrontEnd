@@ -30,4 +30,4 @@
 
 > 아래 영상은 앱의 주요 화면 흐름과 기능을 보여주는 데모 영상입니다.
 
-<video src="./assets/demo.mp4" controls width="100%"></video>
+<video src="https://github.com/Beomboos/Throw_FrontEnd/blob/main/asset/demo.mp4" controls width="100%"></video>
